@@ -887,6 +887,20 @@ html, body { margin: 0; padding: 0; background: #fff; }
         return '<li><strong>' + esc(h.titulo) + '</strong> — ' + esc(h.impacto) + '</li>';
       }).join('')));
 
+      // Los indicadores van acá, en el resumen: es lo que se lee si sólo se lee una hoja.
+      var kpisResumen = kpiRow((cfg.comparativo || {}).kpis || []);
+      if (kpisResumen) place(kpisResumen);
+      place(el('div', 'scope',
+        '<div class="scope-label">Cómo leer este informe</div>' +
+        '<ul>' +
+          '<li><span class="yes">✓</span> <strong>[MEDIDO]</strong>: sale de una medición sobre el HTML servido ' +
+            'del sitio, verificable con los comandos que figuran en «Alcance de esta revisión».</li>' +
+          '<li><span class="no">✗</span> <strong>[INFERIBLE]</strong>: es una estimación. El impacto en consultas ' +
+            'depende de la agenda real, que este informe no ve.</li>' +
+          '<li><span class="no">✗</span> <strong>[NO VERIFICADO]</strong>: no se pudo comprobar y por lo tanto ' +
+            'no se afirma. Es el caso de LinkedIn, que responde con muro de registro.</li>' +
+        '</ul>'));
+
       // --- 02 Diagnóstico
       openSheet();
       startOf.diagnostico = sheets.length;
@@ -911,8 +925,6 @@ html, body { margin: 0; padding: 0; background: #fff; }
         if (comp.intro) body.appendChild(el('p', 'sec-lead', esc(comp.intro)));
         place(el('div', '', compareTable(comp)), 'Comparativo verificado · continúa');
         if (comp.nota) place(el('p', 'evsrc', esc(comp.nota)), 'Comparativo verificado · continúa');
-        var kpis = kpiRow(comp.kpis);
-        if (kpis) place(kpis, 'Comparativo verificado · continúa');
         if (comp.medidoEl) {
           place(el('p', 'evsrc', 'Medición propia del ' + esc(comp.medidoEl) +
             ' · reproducible con: python scripts/medir.py --pares 00-auditoria/pares.txt'),
