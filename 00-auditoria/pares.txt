@@ -1,0 +1,13 @@
+# Pares medidos para el comparativo de la auditoría.
+# Formato: etiqueta | url
+# Fuente del listado: categoría "Psicoanalista · Rosario" de Doctoralia (21 perfiles,
+# 7 con dominio propio). Se eligen los pares con dominio propio + el cliente.
+# Medición: scripts/medir.py
+
+cliente | https://www.liclisandrolagos.com/
+Maricel Gomez Scavuzzo | http://www.maricelgomezscavuzzo-psicologa.com
+Marcos M. Fleitas | http://licmarcosfleitas.com
+Jesica Diaz Zenoff | http://jesicadiazzenoff.com.ar
+Lucia Ramos | http://luciaramospsicologa.com
+Mariela Reinaudi | http://www.mariela-reinaudi.com
+Martin Podesta | http://www.martinpodesta.com

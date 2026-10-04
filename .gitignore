@@ -1,0 +1,7 @@
+# Artefactos de trabajo, no entregables
+__pycache__/
+*.pyc
+.chrome-tmp/
+*.txt.tmp
+
+# El informe en PDF SÍ es entregable: no se ignora.

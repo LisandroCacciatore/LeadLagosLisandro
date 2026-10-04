@@ -1,0 +1,278 @@
+{
+ "que_es": "Perfiles profesionales de Rosario relevados en Doctoralia para el comparativo de la auditoría.",
+ "metodo": "Se descargó el listado público de las categorías «Psicoanalista · Rosario» y «Psicólogo · Rosario» y cada perfil individual; se extrajeron reviewCount y ratingValue de los datos estructurados del propio perfil.",
+ "fuentes": [
+  "https://www.doctoraliar.com/psicoanalista/rosario",
+  "https://www.doctoraliar.com/psicologo/rosario",
+  "https://www.doctoraliar.com/perfil/<slug> (uno por perfil)"
+ ],
+ "medidoEl": "2026-10-04",
+ "totales": {
+  "perfiles": 35,
+  "con_al_menos_una_opinion": 23,
+  "sin_opiniones": 12,
+  "mediana_opiniones_de_los_que_tienen": 14,
+  "maximo_opiniones": 142,
+  "perfiles_con_dominio_propio": 7
+ },
+ "cliente": {
+  "slug": "lisandro-lagos",
+  "opiniones": 5,
+  "rating": "5,0",
+  "posicion_entre_35": 20,
+  "coberturas_medicas": "No se aceptan coberturas médicas: sólo pacientes particulares",
+  "tiempo_de_respuesta_aproximado": "",
+  "fotos_en_el_perfil": 5,
+  "precios_publicados": [
+   "60000"
+  ],
+  "formacion_declarada": 13
+ },
+ "perfiles": [
+  {
+   "slug": "lucia-ramos",
+   "opiniones": 142,
+   "rating": "5",
+   "sitio_propio": "http://luciaramospsicologa.com",
+   "es_cliente": false
+  },
+  {
+   "slug": "maria-laura-smud",
+   "opiniones": 108,
+   "rating": "5",
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "jesica-diaz",
+   "opiniones": 80,
+   "rating": "5",
+   "sitio_propio": "http://jesicadiazzenoff.com.ar",
+   "es_cliente": false
+  },
+  {
+   "slug": "maricel-gomez-scavuzzo",
+   "opiniones": 74,
+   "rating": "5",
+   "sitio_propio": "http://www.maricelgomezscavuzzo-psicologa.com",
+   "es_cliente": false
+  },
+  {
+   "slug": "federico-layacona",
+   "opiniones": 72,
+   "rating": "5",
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "marcos-m-fleitas",
+   "opiniones": 66,
+   "rating": "5",
+   "sitio_propio": "http://licmarcosfleitas.com",
+   "es_cliente": false
+  },
+  {
+   "slug": "martin-serafini",
+   "opiniones": 32,
+   "rating": "5",
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "mariela-reinaudi",
+   "opiniones": 31,
+   "rating": "5",
+   "sitio_propio": "http://www.mariela-reinaudi.com",
+   "es_cliente": false
+  },
+  {
+   "slug": "elva-beatriz-schweizer",
+   "opiniones": 27,
+   "rating": "5",
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "silvina-de-los-angeles-godoy",
+   "opiniones": 17,
+   "rating": "4.5",
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "martin-podesta",
+   "opiniones": 15,
+   "rating": "4",
+   "sitio_propio": "http://www.martinpodesta.com",
+   "es_cliente": false
+  },
+  {
+   "slug": "vanesa-dreutti",
+   "opiniones": 14,
+   "rating": "5",
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "lautaro-cisneros",
+   "opiniones": 13,
+   "rating": "5",
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "guillermo-maucci-verdun-2",
+   "opiniones": 11,
+   "rating": "5",
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "maria-alejandra-manfredi",
+   "opiniones": 11,
+   "rating": "5",
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "anabella-bertolaccini",
+   "opiniones": 9,
+   "rating": "5",
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "claudia-torres-2",
+   "opiniones": 8,
+   "rating": "5",
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "andres-tettamanzi",
+   "opiniones": 7,
+   "rating": "5",
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "juan-franco-bottazzi",
+   "opiniones": 5,
+   "rating": "5",
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "lisandro-lagos",
+   "opiniones": 5,
+   "rating": "5",
+   "sitio_propio": null,
+   "es_cliente": true
+  },
+  {
+   "slug": "leticia-gay",
+   "opiniones": 4,
+   "rating": "5",
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "alejandra-enrique",
+   "opiniones": 2,
+   "rating": "5",
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "juan-maximo-brebbia",
+   "opiniones": 2,
+   "rating": "5",
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "cecilia-almiron",
+   "opiniones": 0,
+   "rating": null,
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "cecilia-caggiano",
+   "opiniones": 0,
+   "rating": null,
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "delfina-anselmi",
+   "opiniones": 0,
+   "rating": null,
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "gonzalo-cupido-piedrabuena",
+   "opiniones": 0,
+   "rating": null,
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "javier-del-ponte",
+   "opiniones": 0,
+   "rating": null,
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "jorgelina-diaz",
+   "opiniones": 0,
+   "rating": null,
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "leonardo-citta-giordano",
+   "opiniones": 0,
+   "rating": null,
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "luciana-ortolani",
+   "opiniones": 0,
+   "rating": null,
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "marcela-berchialla",
+   "opiniones": 0,
+   "rating": null,
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "marcos-benitez",
+   "opiniones": 0,
+   "rating": null,
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "mayra-drivet",
+   "opiniones": 0,
+   "rating": null,
+   "sitio_propio": null,
+   "es_cliente": false
+  },
+  {
+   "slug": "n-ayelen-moleon-torres",
+   "opiniones": 0,
+   "rating": null,
+   "sitio_propio": null,
+   "es_cliente": false
+  }
+ ]
+}

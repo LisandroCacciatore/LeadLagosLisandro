@@ -1,0 +1,472 @@
+{
+ "que_es": "Evidencia de la auditoría de presencia digital del Lic. Lisandro Lagos (Rosario).",
+ "cliente": {
+  "nombre": "Lic. Lisandro Lagos",
+  "matricula": "Matrícula Provincial N° 5677",
+  "profesion": "Psicoanalista · Psicólogo Clínico",
+  "rubro": "Clínica de adultos · Presencial en Rosario y online",
+  "fecha": "4 de octubre de 2026",
+  "validez": "3 de noviembre de 2026",
+  "url": "liclisandrolagos.com"
+ },
+ "medidoEl": "2026-10-04",
+ "autor": {
+  "nombre": "Lisandro Cacciatore",
+  "email": "lisandrocacciatore@gmail.com"
+ },
+ "reproducible": [
+  "python scripts/medir.py --pares 00-auditoria/pares.txt --out 00-auditoria/evidencia-web.json",
+  "python scripts/pesar.py https://www.liclisandrolagos.com/",
+  "python scripts/verificar-sitio.py",
+  "python scripts/consolidar-evidencia.py"
+ ],
+ "sitio_actual": {
+  "url": "https://www.liclisandrolagos.com/",
+  "url_final": "https://www.liclisandrolagos.com/",
+  "status": 200,
+  "error": null,
+  "ms_respuesta": 1355,
+  "bytes_html": 26.4,
+  "https": true,
+  "lang": "ar",
+  "title": "Lic. Lisandro Lagos - Psicoanalista",
+  "title_len": 35,
+  "meta_description": "",
+  "meta_description_len": 0,
+  "og_tags": 0,
+  "twitter_tags": 0,
+  "canonical": null,
+  "hreflang": 0,
+  "robots_meta": null,
+  "ldjson_bloques": 0,
+  "ldjson_tipos": [],
+  "itemprop": 0,
+  "h1_count": 1,
+  "h1_texto": "Lic. Lisandro Lagos",
+  "h2_count": 1,
+  "img_total": 13,
+  "img_sin_alt": 5,
+  "img_lazy": 0,
+  "srcset": 0,
+  "wa_links": [],
+  "wa_botones": 0,
+  "whatsapp_menciones": 0,
+  "tel_links": [
+   "+54 341 301-2482",
+   "+54 9 341 301-2482"
+  ],
+  "mailto": [],
+  "forms": 0,
+  "iframes": 0,
+  "precios": [
+   "60000"
+  ],
+  "viewport": true,
+  "generator": null,
+  "plataforma_docplanner": true,
+  "footer_copyright": null,
+  "server": "nginx",
+  "robots_txt": 200,
+  "sitemap_xml": 404,
+  "sitemap_via_robots": false,
+  "etiqueta": "cliente"
+ },
+ "peso": {
+  "antes_kb": 3555.8,
+  "antes_archivos": 18,
+  "despues_kb": 724.6,
+  "despues_archivos": 5,
+  "reduccion": 4.91
+ },
+ "comparativo_web": {
+  "pares_medidos": 6,
+  "vivos": [
+   "Maricel Gomez Scavuzzo",
+   "Lucia Ramos",
+   "Mariela Reinaudi"
+  ],
+  "dominios_muertos": [
+   "Jesica Diaz Zenoff",
+   "Martin Podesta"
+  ],
+  "bloquearon_la_medicion": [
+   "Marcos M. Fleitas"
+  ],
+  "con_boton_de_whatsapp": [],
+  "detalle": {
+   "Maricel Gomez Scavuzzo": {
+    "url": "http://www.maricelgomezscavuzzo-psicologa.com",
+    "url_final": "https://www.maricelgomezscavuzzo-psicologa.com/",
+    "status": 200,
+    "error": null,
+    "ms_respuesta": 2271,
+    "bytes_html": 91.5,
+    "https": false,
+    "lang": "ar",
+    "title": "Maricel Gomez Scavuzzo - Psicoanalista",
+    "title_len": 38,
+    "meta_description": "Psicóloga Psicoanalista (Psicoterapia de Pareja, Adultos, consultas psicológicas on line).",
+    "meta_description_len": 90,
+    "og_tags": 0,
+    "twitter_tags": 0,
+    "canonical": null,
+    "hreflang": 0,
+    "robots_meta": null,
+    "ldjson_bloques": 0,
+    "ldjson_tipos": [],
+    "itemprop": 0,
+    "h1_count": 6,
+    "h1_texto": "Maricel Gomez Scavuzzo",
+    "h2_count": 0,
+    "img_total": 83,
+    "img_sin_alt": 8,
+    "img_lazy": 0,
+    "srcset": 0,
+    "wa_links": [],
+    "wa_botones": 0,
+    "whatsapp_menciones": 0,
+    "tel_links": [
+     "+54 9 341 696-2682"
+    ],
+    "mailto": [],
+    "forms": 0,
+    "iframes": 0,
+    "precios": [
+     "46000",
+     "47000",
+     "55000"
+    ],
+    "viewport": true,
+    "generator": null,
+    "plataforma_docplanner": true,
+    "footer_copyright": null,
+    "server": "nginx",
+    "robots_txt": 200,
+    "sitemap_xml": 404,
+    "sitemap_via_robots": false,
+    "etiqueta": "Maricel Gomez Scavuzzo"
+   },
+   "Marcos M. Fleitas": {
+    "url": "http://licmarcosfleitas.com",
+    "url_final": "http://licmarcosfleitas.com",
+    "status": 429,
+    "error": null,
+    "ms_respuesta": 758,
+    "bytes_html": 0.0,
+    "https": false,
+    "lang": null,
+    "title": null,
+    "title_len": 0,
+    "meta_description": null,
+    "meta_description_len": 0,
+    "og_tags": 0,
+    "twitter_tags": 0,
+    "canonical": null,
+    "hreflang": 0,
+    "robots_meta": null,
+    "ldjson_bloques": 0,
+    "ldjson_tipos": [],
+    "itemprop": 0,
+    "h1_count": 0,
+    "h1_texto": null,
+    "h2_count": 0,
+    "img_total": 0,
+    "img_sin_alt": 0,
+    "img_lazy": 0,
+    "srcset": 0,
+    "wa_links": [],
+    "wa_botones": 0,
+    "whatsapp_menciones": 0,
+    "tel_links": [],
+    "mailto": [],
+    "forms": 0,
+    "iframes": 0,
+    "precios": [],
+    "viewport": false,
+    "generator": null,
+    "plataforma_docplanner": false,
+    "footer_copyright": null,
+    "server": null,
+    "robots_txt": 429,
+    "sitemap_xml": 429,
+    "sitemap_via_robots": false,
+    "etiqueta": "Marcos M. Fleitas"
+   },
+   "Jesica Diaz Zenoff": {
+    "url": "http://jesicadiazzenoff.com.ar",
+    "url_final": "http://jesicadiazzenoff.com.ar",
+    "status": null,
+    "error": "__ERR__ URLError: <urlopen error [Errno 11001] getaddrinfo failed>",
+    "ms_respuesta": 23,
+    "bytes_html": null,
+    "https": false,
+    "etiqueta": "Jesica Diaz Zenoff"
+   },
+   "Lucia Ramos": {
+    "url": "http://luciaramospsicologa.com",
+    "url_final": "https://www.luciaramospsicologa.com/",
+    "status": 200,
+    "error": null,
+    "ms_respuesta": 1486,
+    "bytes_html": 811.8,
+    "https": false,
+    "lang": "es",
+    "title": "Lic. Lucía Ramos | Psicóloga cognitivo conductual",
+    "title_len": 49,
+    "meta_description": "Reserva tu turno de psicoterapia online con Lic. Lucía Ramos. Además accede a la última información científica relacionada con la Salud Mental y el Desarrollo Personal.",
+    "meta_description_len": 168,
+    "og_tags": 8,
+    "twitter_tags": 4,
+    "canonical": "https://www.luciaramospsicologa.com",
+    "hreflang": 0,
+    "robots_meta": null,
+    "ldjson_bloques": 1,
+    "ldjson_tipos": [
+     "WebSite"
+    ],
+    "itemprop": 0,
+    "h1_count": 0,
+    "h1_texto": null,
+    "h2_count": 7,
+    "img_total": 12,
+    "img_sin_alt": 2,
+    "img_lazy": 1,
+    "srcset": 11,
+    "wa_links": [],
+    "wa_botones": 0,
+    "whatsapp_menciones": 0,
+    "tel_links": [],
+    "mailto": [],
+    "forms": 0,
+    "iframes": 0,
+    "precios": [],
+    "viewport": true,
+    "generator": "Wix.com Website Builder",
+    "plataforma_docplanner": true,
+    "footer_copyright": null,
+    "server": "cloudflare",
+    "robots_txt": 200,
+    "sitemap_xml": 200,
+    "sitemap_via_robots": true,
+    "etiqueta": "Lucia Ramos"
+   },
+   "Mariela Reinaudi": {
+    "url": "http://www.mariela-reinaudi.com",
+    "url_final": "https://www.mariela-reinaudi.com/",
+    "status": 200,
+    "error": null,
+    "ms_respuesta": 3180,
+    "bytes_html": 56.1,
+    "https": false,
+    "lang": "ar",
+    "title": "Dra. Mariela Reinaudi - Psicólogo, Rosario",
+    "title_len": 42,
+    "meta_description": "consultorio en microcentro Rosario-de facil acceso con rampa para discapacitados",
+    "meta_description_len": 80,
+    "og_tags": 0,
+    "twitter_tags": 0,
+    "canonical": null,
+    "hreflang": 0,
+    "robots_meta": null,
+    "ldjson_bloques": 0,
+    "ldjson_tipos": [],
+    "itemprop": 0,
+    "h1_count": 1,
+    "h1_texto": "Dra. Mariela Reinaudi",
+    "h2_count": 1,
+    "img_total": 43,
+    "img_sin_alt": 9,
+    "img_lazy": 0,
+    "srcset": 0,
+    "wa_links": [],
+    "wa_botones": 0,
+    "whatsapp_menciones": 0,
+    "tel_links": [
+     "+54 341 549-8847"
+    ],
+    "mailto": [],
+    "forms": 0,
+    "iframes": 0,
+    "precios": [
+     "13000",
+     "15000",
+     "16000",
+     "17000",
+     "18000",
+     "27000"
+    ],
+    "viewport": true,
+    "generator": null,
+    "plataforma_docplanner": true,
+    "footer_copyright": null,
+    "server": "nginx",
+    "robots_txt": 200,
+    "sitemap_xml": 404,
+    "sitemap_via_robots": false,
+    "etiqueta": "Mariela Reinaudi"
+   },
+   "Martin Podesta": {
+    "url": "http://www.martinpodesta.com",
+    "url_final": "http://www.martinpodesta.com",
+    "status": null,
+    "error": "__ERR__ URLError: <urlopen error [Errno 11001] getaddrinfo failed>",
+    "ms_respuesta": 21,
+    "bytes_html": null,
+    "https": false,
+    "etiqueta": "Martin Podesta"
+   }
+  }
+ },
+ "comparativo_doctoralia": {
+  "perfiles": 35,
+  "con_al_menos_una_opinion": 23,
+  "sin_opiniones": 12,
+  "mediana_opiniones_de_los_que_tienen": 14,
+  "maximo_opiniones": 142,
+  "perfiles_con_dominio_propio": 7
+ },
+ "posicion_del_cliente": {
+  "opiniones": 5,
+  "rating": "5,0",
+  "mediana_de_la_categoria": 14,
+  "maximo_de_la_categoria": 142
+ },
+ "hallazgos": [
+  {
+   "prioridad": "alta",
+   "evidencia": "[MEDIDO]",
+   "titulo": "Tu sitio te pide que le escribas por WhatsApp y no tiene WhatsApp",
+   "impacto": "Cada consulta que llega fuera del horario queda sin canal de contacto directo."
+  },
+  {
+   "prioridad": "alta",
+   "evidencia": "[MEDIDO]",
+   "titulo": "Google no tiene nada que mostrar de vos",
+   "impacto": "Menos clics en búsquedas donde hoy ya aparecés, con el mismo esfuerzo de contenido."
+  },
+  {
+   "prioridad": "alta",
+   "evidencia": "[MEDIDO]",
+   "titulo": "El sitio no es tuyo: es un template compartido de Docplanner",
+   "impacto": "Techo duro de mejora: cualquier cambio depende de un tercero."
+  },
+  {
+   "prioridad": "alta",
+   "evidencia": "[MEDIDO]",
+   "titulo": "En Doctoralia tenés 5 opiniones de 5 estrellas; la mediana de tu categoría es 14 y el máximo, 142",
+   "impacto": "5 opiniones no alcanzan para que un desconocido te elija sobre otro perfil con 142."
+  },
+  {
+   "prioridad": "media",
+   "evidencia": "[MEDIDO]",
+   "titulo": "No hay una sola foto tuya, ni tu habilitación publicada como dato",
+   "impacto": "El dato que más confianza genera (una habilitación vigente) hoy no existe para los buscadores."
+  },
+  {
+   "prioridad": "baja",
+   "evidencia": "[MEDIDO]",
+   "titulo": "Casa desordenada: 3,5 MB por visita, sin mapa del sitio y con las imágenes sin describir",
+   "impacto": "Cinco veces menos peso por visita: menos abandono en celular y mejor puntaje de velocidad."
+  }
+ ],
+ "propuesta": {
+  "moneda": "USD",
+  "base": 350,
+  "modulos": [
+   {
+    "code": "M1",
+    "title": "WhatsApp contextual",
+    "price": 100
+   },
+   {
+    "code": "M2",
+    "title": "Recordatorios automáticos de turno",
+    "price": 150
+   },
+   {
+    "code": "M3",
+    "title": "Agenda online sincronizada",
+    "price": 120
+   },
+   {
+    "code": "M4",
+    "title": "SEO estructurado y Perfil de Empresa en Google",
+    "price": 120
+   },
+   {
+    "code": "M5",
+    "title": "Página de honorarios y encuadre económico",
+    "price": 80
+   },
+   {
+    "code": "M6",
+    "title": "Sección Clínica y ensayos",
+    "price": 150
+   }
+  ],
+  "total_pack": 1070,
+  "pack_con_descuento": 910,
+  "referencia_cambio": {
+   "tipoCambio": 1551.9,
+   "tipoCambioFecha": "4 de octubre de 2026",
+   "tipoCambioFuente": "dolarapi.com (dólar bolsa, venta)",
+   "tipoCambioDetalle": "USD 1 = AR$ 1.551,90",
+   "tarifaSesion": 60000,
+   "tarifaSesionFuente": "liclisandrolagos.com — sección Precios (publicada por el propio profesional)"
+  }
+ },
+ "verificado": [
+  "Medí el HTML servido de liclisandrolagos.com el 4 de octubre de 2026, con la herramienta incluida en este repositorio (scripts/medir.py): cada número de este documento se puede reproducir con ese comando.",
+  "Medí con la misma herramienta los 7 dominios propios de colegas de tu categoría en Rosario.",
+  "Leí tu perfil público de Doctoralia y los 21 perfiles de la categoría «Psicoanalista · Rosario».",
+  "Verifiqué la habilitación y la dirección contra el propio certificado publicado en tu sitio."
+ ],
+ "no_verificado": [
+  "Sin acceso a tus estadísticas de visita: los impactos en consultas son estimaciones, marcadas [INFERIBLE].",
+  "No revisé tu perfil de LinkedIn: LinkedIn responde con muro de registro (HTTP 999) a la lectura automática, así que no afirmo nada sobre tus publicaciones ni tus contactos.",
+  "No revisé tu facturación, tu agenda real ni tu tasa de ausencias.",
+  "No revisé tu perfil de Google Business ni tus otras redes."
+ ],
+ "datos_por_confirmar": [
+  "¿Querés que el turno se reserve solo en tu agenda o preferís que el primer contacto sea siempre por WhatsApp?",
+  "¿Emitís factura o recibo para que el paciente gestione reintegro? Tu perfil de Doctoralia dice «no se aceptan coberturas médicas: sólo pacientes particulares» y el sitio no dice nada al respecto.",
+  "¿Qué días y horarios querés publicar? Hoy no figuran en ninguna parte.",
+  "¿Hay una foto tuya que quieras usar? Hoy las 5 imágenes del sitio son del consultorio y del certificado; la única imagen de perfil es la sala."
+ ],
+ "antes_despues": {
+  "antes": {
+   "status": 200,
+   "lang": "ar",
+   "meta_description_len": 0,
+   "og_tags": 0,
+   "twitter_tags": 0,
+   "ldjson_bloques": 0,
+   "h1_count": 1,
+   "h2_count": 1,
+   "img_total": 13,
+   "img_sin_alt": 5,
+   "img_lazy": 0,
+   "srcset": 0,
+   "wa_botones": 0,
+   "sitemap_via_robots": false,
+   "bytes_html": 26.4
+  },
+  "despues": {
+   "status": 200,
+   "lang": "es-AR",
+   "meta_description_len": 150,
+   "og_tags": 10,
+   "twitter_tags": 4,
+   "ldjson_bloques": 1,
+   "h1_count": 1,
+   "h2_count": 7,
+   "img_total": 4,
+   "img_sin_alt": 0,
+   "img_lazy": 3,
+   "srcset": 2,
+   "wa_botones": 14,
+   "sitemap_via_robots": true,
+   "bytes_html": 48.8
+  }
+ }
+}
