@@ -89,18 +89,15 @@ def main() -> int:
     # ---- Invariante 2: el informe paginó sin cortar contenido
     inf = dom_inf
     n_find = len(re.findall(r'class="finding"', inf))
-    n_rows = len(re.findall(r'class="mod-row"', inf))
     n_comp = len(re.findall(r'class="compare-table"', inf))
     hojas = re.search(r'data-hojas="(\d+)"', inf)
     desb = re.search(r'data-desbordes="(\d+)"', inf)
     n_hojas = int(hojas.group(1)) if hojas else 0
     n_desb = int(desb.group(1)) if desb else -1
-    print(f"  informe   : {n_find} hallazgos · {n_rows} filas de módulos · "
-          f"{n_comp} comparativo · {n_hojas} hojas · desbordes={n_desb}")
+    print(f"  informe   : {n_find} hallazgos · {n_comp} comparativo · "
+          f"{n_hojas} hojas · desbordes={n_desb}")
     if n_find != n_hallazgos:
         errores.append(f"informe: esperaba {n_hallazgos} hallazgos, hay {n_find}")
-    if n_rows != n_modulos:
-        errores.append(f"informe: esperaba {n_modulos} filas de módulos, hay {n_rows}")
     # El comparativo es opcional: hay configs cuyo comparativo es una tabla de mercado
     # orientativa, que sólo tiene sentido en la propuesta y no bajo el título «verificado».
     comp_cfg = cfg.get("comparativo", {})
@@ -111,8 +108,11 @@ def main() -> int:
         errores.append(f"informe: el paginador armó {n_hojas} hojas (esperado 5-16)")
     if n_desb != 0:
         errores.append(f"informe: el paginador reporta {n_desb} hoja(s) con desborde")
-    if "Pack completo" not in inf:
-        errores.append("informe: falta el escenario 'Pack completo'")
+    # §4: el informe es sólo diagnóstico. Precios y módulos viven en la propuesta.
+    if re.search(r'class="mod-row"|class="base-card"|class="total-row"', inf):
+        errores.append("informe: tiene precios o módulos (§4: sólo diagnóstico)")
+    if "ver la propuesta" not in inf.lower():
+        errores.append("informe: falta el CTA de cierre «Ver la propuesta →»")
     if "Página 1 de" not in inf and "Página " not in inf:
         errores.append("informe: no encontré la numeración de páginas")
     if "banner" in inf and "Error al armar el documento" in inf:
