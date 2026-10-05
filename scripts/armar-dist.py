@@ -45,18 +45,29 @@ NOINDEX = '<meta name="robots" content="noindex, nofollow">'
 ARCHIVO = "index.html"
 
 
-def imagen_uri(path: Path, ancho: int = 1000, calidad: int = 74) -> str:
-    """Embebe una captura como data URI JPEG, redimensionada: la home queda en un
-    solo archivo. Si falta Pillow, se cae a un iframe (ver portada())."""
-    import base64
-    import io
-    from PIL import Image
-    im = Image.open(path).convert("RGB")
-    if im.width > ancho:
-        im = im.resize((ancho, round(im.height * ancho / im.width)), Image.LANCZOS)
-    buf = io.BytesIO()
-    im.save(buf, "JPEG", quality=calidad, optimize=True, progressive=True)
-    return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
+def preparar_captura(path: Path, ancho: int = 1000) -> str:
+    """Deja la captura del sitio dentro de dist/ y devuelve su ruta relativa.
+
+    Usa Pillow si está disponible (redimensiona y comprime); si no —por ejemplo en el
+    runner de GitHub Actions, que no lo trae— copia el archivo tal cual. Y si aun así
+    falla, devuelve "" para que la portada caiga al iframe: la publicación nunca se
+    cae por una captura."""
+    destino_dir = DIST / "assets"
+    try:
+        destino_dir.mkdir(parents=True, exist_ok=True)
+        destino = destino_dir / ("captura" + (path.suffix or ".jpg"))
+        try:
+            from PIL import Image
+            im = Image.open(path).convert("RGB")
+            if im.width > ancho:
+                im = im.resize((ancho, round(im.height * ancho / im.width)), Image.LANCZOS)
+            destino = destino_dir / "captura.jpg"
+            im.save(destino, "JPEG", quality=74, optimize=True, progressive=True)
+        except Exception:
+            shutil.copyfile(path, destino)
+        return f"assets/{destino.name}"
+    except Exception:
+        return ""
 
 
 def brand_override(cfg: dict) -> str:
@@ -131,11 +142,12 @@ def portada(css: str, cfg: dict, lista: list) -> str:
     nombre = meta.get("nombre", "Lead")
     url = (modelo.get("url") or "").strip()
 
-    # 3 · preview del sitio nuevo: captura si existe (un solo archivo), iframe si no.
+    # 3 · preview del sitio nuevo: captura si existe, iframe si no.
     captura = modelo.get("captura")
     p = (ROOT / captura) if captura else None
-    if p and p.exists():
-        media = (f'<img class="shot-img" src="{imagen_uri(p, ancho=1000, calidad=74)}" '
+    rel = preparar_captura(p) if (p and p.exists()) else ""
+    if rel:
+        media = (f'<img class="shot-img" src="{rel}" '
                  f'alt="Vista del sitio nuevo de {html.escape(nombre)}">')
     elif url:
         media = (f'<iframe class="shot-frame" src="{html.escape(url)}" loading="lazy" '
