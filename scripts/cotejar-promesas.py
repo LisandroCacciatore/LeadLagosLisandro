@@ -135,7 +135,10 @@ def main() -> int:
             n = len(re.findall(r'<img[^>]+alt="[^"]{3,}"', dom, re.I))
             tot = len(re.findall(r"<img", dom, re.I))
             return (tot > 0 and n == tot), f"{n} de {tot} imágenes con texto alternativo"
-        if "por artículo" in t or "por articulo" in t:
+        # «Cada artículo con su título, su descripción…» habla de los artículos del blog,
+        # no de la meta del documento: contestarlo con la meta description lo marcaba
+        # cumplido sin haber mirado ningún artículo.
+        if re.search(r"art[íi]culo", t):
             return None, "la descripción por artículo se verifica en el blog, no en la home"
         if "descripción" in t or "descripcion" in t or "títulos" in t:
             m = re.search(r'name="description"[^>]+content="([^"]{10,})"', dom, re.I)
