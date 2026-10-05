@@ -130,8 +130,10 @@ def main() -> int:
     esperado = f"USD {base}"
     if total_txt != esperado:
         errores.append(f'propuesta: el total inicial debería ser "{esperado}", es {total_txt!r}')
-    if n_kpi < 4:
-        errores.append(f"propuesta: faltan indicadores ({n_kpi})")
+    # §4.1 del spec editorial: máximo 4 números en el cuadro, y 3 cuando no hay una
+    # unidad común entre ellos. Menos de 3 sí es un cuadro pobre.
+    if n_kpi < 3 or n_kpi > 4:
+        errores.append(f"propuesta: el cuadro tiene {n_kpi} indicadores (el spec pide 3 o 4)")
     if "compare-table" not in prop:
         errores.append("propuesta: falta la tabla comparativa")
     for h in cfg.get("hallazgos", []):

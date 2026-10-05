@@ -187,12 +187,18 @@ def main() -> int:
         for m in set(marca_peso.findall(texto)):
             golpes.append(f"{nombre}: «{m.lower()}»")
     if bloque_callout or bloque_callout_inf:
-        permitido = ("[inferible]" in (bloque_callout + bloque_callout_inf).lower()
-                     or bool((cfg.get("callout") or {}).get("excepcionTarifa")))
-        if permitido:
-            print("  ✓ callout: tarifa publicada en su moneda, una sola vez ([INFERIBLE])")
-        else:
-            golpes.append("callout: mención en pesos sin marca [INFERIBLE]")
+        # La marca sólo se exige si el callout efectivamente habla en pesos o en
+        # unidades del cliente: un callout que dice «no voy a inventar ese número»
+        # no necesita [INFERIBLE] porque no estima nada.
+        texto_callout = texto_visible((bloque_callout + " " + bloque_callout_inf))
+        if marca_peso.search(texto_callout) or marca_peso.search(
+                " ".join(str(co_cfg.get(k) or "") for k in ("strong", "note"))):
+            permitido = ("[inferible]" in (bloque_callout + bloque_callout_inf).lower()
+                         or bool(co_cfg.get("excepcionTarifa")))
+            if permitido:
+                print("  ✓ callout: tarifa publicada en su moneda, una sola vez ([INFERIBLE])")
+            else:
+                golpes.append("callout: mención en pesos sin marca [INFERIBLE]")
     if golpes:
         fallas.append("hay conversión a pesos/sesiones: " + "; ".join(sorted(set(golpes))))
     else:

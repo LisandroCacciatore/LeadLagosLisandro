@@ -413,6 +413,12 @@ def main() -> int:
             f"<li><strong>{esc(n)}:</strong> {esc(d)} — <strong>{money(u)}</strong></li>"
             for n, d, u in scenarios(base, modulos)
         ),
+        # §10 del spec editorial: al lado de la tabla, la línea del recomendado.
+        "RECOMENDADO_LINE": (
+            "Recomendado para tu caso: Base + " +
+            " + ".join(str(m.get("code")) for m in modulos[:3]) +
+            f" = {money(base + sum(int(m.get('price', 0)) for m in modulos[:3]))}."
+            if len(modulos) >= 3 else ""),
         "SHOTS_BAND": shots_band(cfg),
         "WHATSAPP_CTA_HTML": (
             f'<a class="btn btn-wa" href="https://wa.me/{esc(author.get("whatsapp"))}'
