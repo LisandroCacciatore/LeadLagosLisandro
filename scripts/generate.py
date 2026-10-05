@@ -72,8 +72,14 @@ def finding_card(h: dict, idx: int = 0) -> str:
     prio = (h.get("prioridad") or "").strip().lower()
     prio_tag = (f'<span class="tag tag-prio-{esc(prio)}">Prioridad {esc(prio)}</span>'
                 if prio else "")
-    titulo = f"{idx}. {h.get('titulo')}" if idx else str(h.get("titulo"))
+    # La propuesta titula corto (`tituloCorto`); el informe conserva el título largo.
+    # Con el mismo texto en las dos piezas, el vocabulario se repetía entre documentos.
+    base_titulo = h.get("tituloCorto") or h.get("titulo")
+    titulo = f"{idx}. {base_titulo}" if idx else str(base_titulo)
     medido = h.get("resumen") or h.get("descripcion")
+    # §4: la propuesta usa una consecuencia redactada para ella (`significa`); el
+    # informe usa la suya (`impacto`). Si coincidieran, las piezas repetirían contenido.
+    significa = h.get("significa") or h.get("impacto")
     propongo = h.get("propongo") or "[a definir]"
     return f"""
     <div class="finding">
@@ -83,7 +89,7 @@ def finding_card(h: dict, idx: int = 0) -> str:
         <span class="finding-title">{esc(titulo)}</span>
       </div>
       <p><strong>Medido:</strong> {esc(medido)}</p>
-      <p><strong>Qué significa:</strong> {esc(h.get('impacto'))}</p>
+      <p><strong>Qué significa:</strong> {esc(significa)}</p>
       <p><strong>Qué propongo:</strong> {esc(propongo)}</p>
     </div>"""
 

@@ -38,8 +38,8 @@
       "Buenos Aires 1110"
     ],
     "hojas": [
-      10,
-      14
+      7,
+      11
     ]
   },
   "propuesta": {
@@ -81,8 +81,10 @@
       "titulo": "Tu sitio te pide que le escribas por WhatsApp y no tiene WhatsApp",
       "descripcion": "En «Sobre mí» el propio sitio dice: «Contacto vía mensaje de audio o texto al celular que aparece debajo». Medido sobre el HTML servido: 0 enlaces a WhatsApp (0 apariciones de wa.me) contra 2 enlaces telefónicos. La persona lee la instrucción, busca el botón, no está, y cierra. De los 7 colegas con dominio propio en tu categoría, ninguno publica un botón de WhatsApp: es la ventaja más barata que hoy está sobre la mesa.",
       "impacto": "Cada consulta que llega fuera del horario queda sin canal de contacto directo.",
-      "resumen": "0 enlaces a WhatsApp (0 apariciones de wa.me) contra 2 enlaces telefónicos, medido sobre el HTML servido.",
-      "propongo": "Módulo M1 — WhatsApp contextual. La base ya incluye el botón con el mensaje escrito; M1 lo hace cambiar según la sección donde esté la persona."
+      "resumen": "0 enlaces wa.me y 2 tel:, medido sobre el HTML servido.",
+      "propongo": "Módulo M1 — WhatsApp contextual. La base ya incluye el botón con el mensaje escrito; M1 lo hace cambiar según la sección donde esté la persona.",
+      "significa": "Quien te busca cuando ya decidió, no te encuentra a mano: tiene que marcar o llenar un formulario.",
+      "tituloCorto": "Ningún canal de contacto en un clic"
     },
     {
       "prioridad": "alta",
@@ -90,8 +92,10 @@
       "titulo": "Google no tiene nada que mostrar de vos",
       "descripcion": "La descripción para buscadores está vacía (0 caracteres). No hay una sola etiqueta Open Graph (0), ni Twitter Card (0), ni canonical, ni datos estructurados (0 bloques JSON-LD). Cuando alguien te busca en Google, tu resultado depende del azar: tu vecina Lucía Ramos tiene descripción de 168 caracteres, 8 etiquetas Open Graph, 4 de Twitter, 1 bloque de datos estructurados y mapa del sitio.",
       "impacto": "Menos clics en búsquedas donde hoy ya aparecés, con el mismo esfuerzo de contenido.",
-      "resumen": "Descripción para buscadores: 0 caracteres. Open Graph: 0. Twitter Card: 0. Canonical: 0. Datos estructurados: 0 bloques.",
-      "propongo": "Módulo M4 — SEO estructurado: título, descripción, Open Graph, sitemap y datos estructurados de psicólogo."
+      "resumen": "0 caracteres de descripción, 0 Open Graph, 0 datos estructurados, 0 canónica.",
+      "propongo": "Módulo M4 — SEO estructurado: título, descripción, Open Graph, sitemap y datos estructurados de psicólogo.",
+      "significa": "Buscándote por tu especialidad, tu resultado no puede decir nada tuyo: no hay de dónde sacarlo.",
+      "tituloCorto": "Nada que mostrar en Google"
     },
     {
       "prioridad": "alta",
@@ -99,8 +103,10 @@
       "titulo": "El sitio no es tuyo: es un template compartido de Docplanner",
       "descripcion": "El HTML servido carga /websites/14/assets/css/themes/theme-brown_beige.css y el pie dice «DocPlanner.com © 2026». El dominio, los textos y las fotos son tuyos; el sitio es de la plataforma. No podés agregar un botón de WhatsApp, ni cambiar el título con el que aparecés en Google, ni llevarte tus datos. Y arrastra 3 defectos que no dependen de vos: declara el idioma árabe (lang=\"ar\"), no emite datos estructurados y no publica mapa del sitio. Le pasa exactamente lo mismo a 3 de los 5 sitios vivos de colegas de tu categoría.",
       "impacto": "Techo duro de mejora: cualquier cambio depende de un tercero.",
-      "resumen": "El HTML carga /websites/14/assets/css/themes/theme-brown_beige.css y el pie dice «DocPlanner.com © 2026». Declara lang=\"ar\", no emite datos estructurados y su sitemap da 404.",
-      "propongo": "Base — sitio propio en tu dominio, sin una plataforma de terceros en el medio."
+      "resumen": "CSS /websites/14/…theme-brown_beige.css, pie «DocPlanner.com © 2026», lang=\"ar\".",
+      "propongo": "Base — sitio propio en tu dominio, sin una plataforma de terceros en el medio.",
+      "significa": "Cada arreglo tiene que pasar por alguien que no sos vos, y así se quedó el idioma en el que no hablás.",
+      "tituloCorto": "El sitio es de una plataforma, no tuyo"
     },
     {
       "prioridad": "alta",
@@ -108,8 +114,10 @@
       "titulo": "En Doctoralia tenés 5 opiniones de 5 estrellas; la mediana de tu categoría es 14 y el máximo, 142",
       "descripcion": "Relevé los 35 perfiles de las categorías «Psicoanalista · Rosario» y «Psicólogo · Rosario»: 23 tienen al menos una opinión y 12 ninguna. La mediana de los que tienen es 14 y el máximo 142. Vos tenés 5, todas de cinco estrellas: la calidad está, lo que falta es volumen. Y hay una pista: Lucía Ramos, la que más opiniones tiene (142), es la única del grupo con un sitio propio bien hecho; de los 7 dominios propios que relevé, 2 hoy no resuelven y 1 bloqueó la medición. En tu propio perfil, además, el campo «Tiempo de respuesta aproximado» está vacío.",
       "impacto": "5 opiniones no alcanzan para que un desconocido te elija sobre otro perfil con 142.",
-      "resumen": "5 opiniones propias contra mediana 14 y máximo 142, sobre 35 perfiles relevados: 23 tienen al menos una opinión y 12 ninguna.",
-      "propongo": "Base — el sitio nuevo pide la opinión al paciente al salir del turno, con un enlace directo a tu perfil de Doctoralia."
+      "resumen": "5 opiniones propias; mediana 14 y máximo 142 entre 35 perfiles relevados.",
+      "propongo": "Base — el sitio nuevo pide la opinión al paciente al salir del turno, con un enlace directo a tu perfil de Doctoralia.",
+      "significa": "Puesto al lado de otro profesional de tu rubro, tu perfil es el que tiene menos prueba social.",
+      "tituloCorto": "Prueba social por debajo de la categoría"
     },
     {
       "prioridad": "media",
@@ -117,8 +125,10 @@
       "titulo": "No hay una sola foto tuya, ni tu habilitación publicada como dato",
       "descripcion": "Las 5 imágenes del sitio son 4 fotos del consultorio de Buenos Aires 1110 Piso 4 Dto 8 y 1 del certificado de habilitación. No hay retrato del profesional: el círculo del encabezado queda con la foto de la sala. Y el certificado —que es un activo real y verificable: Habilitación Provincial de Consultorio N° 084-60296, Resolución de Directorio ACTA N° 958, trámite 58-0111-22, válida hasta el 16 de agosto de 2027, firmada por el presidente del Colegio— existe sólo como foto. Google no puede leerla, y quien te lee con un lector de pantalla tampoco.",
       "impacto": "El dato que más confianza genera (una habilitación vigente) hoy no existe para los buscadores.",
-      "resumen": "5 imágenes: 4 del consultorio y 1 del certificado. Ningún retrato del profesional; la habilitación N° 084-60296 existe sólo como foto.",
-      "propongo": "Base — tu habilitación publicada como texto, y el lugar del retrato queda reservado: esa foto la tenés que aportar vos."
+      "resumen": "5 imágenes: 4 del consultorio y 1 del certificado. Ningún retrato.",
+      "propongo": "Base — tu habilitación publicada como texto, y el lugar del retrato queda reservado: esa foto la tenés que aportar vos.",
+      "significa": "El número de habilitación —lo único que un paciente chequea antes de escribirte— no se puede leer: está dentro de una foto.",
+      "tituloCorto": "Sin retrato y sin número legible"
     },
     {
       "prioridad": "baja",
@@ -126,8 +136,10 @@
       "titulo": "El sitio pesa 3,5 MB por visita y no publica mapa del sitio",
       "descripcion": "Para mostrar una sola página, el sitio obliga a bajar 3.555,8 KB en 18 archivos: entre ellos 703 KB y 602 KB de fotos sin optimizar, 215 KB de hoja de estilos y 199 KB de Summernote, un editor de texto enriquecido que un sitio ya publicado no usa. El sitio nuevo hace lo mismo con 724,6 KB en 5 archivos. Además: sitemap.xml responde 404 (el de Lucía Ramos: 200), 5 de 13 imágenes no tienen texto alternativo, 0 tienen carga diferida y 0 usan srcset, así que en un celular con datos móviles se baja todo aunque no se vea.",
       "impacto": "Cinco veces menos peso por visita: menos abandono en celular y mejor puntaje de velocidad.",
-      "resumen": "3.555,8 KB en 18 archivos para una sola página: 703 KB y 602 KB de fotos sin optimizar, 215 KB de CSS y 199 KB de Summernote. sitemap.xml: 404. Imágenes sin texto alternativo: 5 de 13.",
-      "propongo": "Base + M3 — el sitio nuevo pesa 724,6 KB en 5 archivos, con mapa del sitio y descripciones en las imágenes."
+      "resumen": "3,5 MB en 18 archivos; sitemap 404; 5 de 13 imágenes sin texto alternativo.",
+      "propongo": "Base + M3 — el sitio nuevo pesa 724,6 KB en 5 archivos, con mapa del sitio y descripciones en las imágenes.",
+      "significa": "Con datos móviles, la primera visita paga el precio del peso antes de ver nada.",
+      "tituloCorto": "Tres megas y medio por visita"
     }
   ],
   "comparativo": {

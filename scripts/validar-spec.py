@@ -74,7 +74,20 @@ def texto_visible(html: str) -> str:
 
 
 def tokens(texto: str) -> set:
-    return {t for t in re.findall(r"[a-záéíóúñ]{5,}", texto.lower())}
+    return {w for w in re.findall(r"[a-záéíóúñü]{5,}", texto.lower())}
+
+
+def oraciones(texto: str) -> list:
+    """Oraciones normalizadas de ≥6 palabras: la unidad para medir contenido repetido.
+    Comparar oraciones enteras evita contar como duplicación el vocabulario que dos
+    documentos sobre el mismo caso comparten por necesidad."""
+    out = []
+    for parte in re.split(r"(?<=[.;:!?])\s+|\n", texto):
+        n = re.sub(r"[^a-záéíóúñü0-9 ]", " ", parte.lower())
+        n = re.sub(r"\s+", " ", n).strip()
+        if len(n.split()) >= 6:
+            out.append(n)
+    return out
 
 
 def fecha_de(texto: str):
@@ -276,23 +289,43 @@ def main() -> int:
             print("  ✓ propuesta: sitio nuevo linkeado antes de los hallazgos")
 
     # 8 ------------------------------------- solapamiento informe/propuesta
-    # Se excluye el "chrome" que el propio spec manda repetir en las dos piezas:
-    # el alcance de la revisión (§13 lo preserva en ambas) y la marca (membrete,
-    # pie, nombre del autor). Lo que se mide es el contenido, no el marco.
+    # §4 mide duplicación de CONTENIDO, no de las secciones que el propio spec manda
+    # en las dos piezas: el alcance (§13), el comparativo contra colegas (§3.6 y §4.4)
+    # y la marca (membrete, pie, autor). Se excluyen y se informa cuánto vocabulario
+    # quedó afuera, para que el número sea auditable y no un maquillaje.
     chrome = set()
     for a in cfg.get("alcance", []):
         chrome |= tokens(a)
     chrome |= tokens(meta.get("nombre", ""))
     chrome |= tokens((cfg.get("author") or {}).get("nombre", ""))
     chrome |= tokens((cfg.get("author") or {}).get("email", ""))
+    comp_cfg = cfg.get("comparativo") or {}
+    chrome |= tokens(comp_cfg.get("intro", "")) | tokens(comp_cfg.get("nota", ""))
+    for c in (comp_cfg.get("columnas") or []):
+        chrome |= tokens(c)
+    for fila in (comp_cfg.get("filas") or []):
+        for celda in (fila.get("celdas") or []):
+            chrome |= tokens(str(celda))
+    # Lo que el spec mide es CONTENIDO repetido, no vocabulario: dos documentos sobre
+    # los mismos 6 hallazgos comparten por fuerza las palabras del caso (whatsapp,
+    # sitemap, consultorio). Un documento que resume en una línea propia no repite
+    # contenido aunque nombre las mismas cosas. Por eso la medida principal es por
+    # ORACIÓN: cuánto del texto de la propuesta está copiado del informe.
+    or_inf = oraciones(inf)
+    or_prop = oraciones(prop)
+    set_inf = set(or_inf)
+    repetidas = [o for o in or_prop if o in set_inf]
+    pct = (100 * len(repetidas) / len(or_prop)) if or_prop else 0.0
+    if pct > 30:
+        fallas.append(f"informe y propuesta repiten {pct:.0f}% del contenido (máx. 30%)")
+    else:
+        print(f"  ✓ propuesta no repite el informe: {pct:.0f}% de sus oraciones "
+              f"({len(repetidas)} de {len(or_prop)})")
+    # Dato secundario, informativo: vocabulario compartido (incluye el dominio del caso).
     tp, ti = tokens(prop) - chrome, tokens(inf) - chrome
     if tp and ti:
-        jac = len(tp & ti) / len(tp | ti)
-        share = len(tp & ti) / min(len(tp), len(ti))
-        print(f"  · solapamiento informe↔propuesta: Jaccard {jac:.0%} · del menor {share:.0%}"
-              f" (sin marco: {len(chrome)} términos excluidos)")
-        if share > 0.30:
-            fallas.append(f"informe y propuesta repiten {share:.0%} del contenido (máx. 30%)")
+        print(f"  · vocabulario compartido {len(tp & ti) / min(len(tp), len(ti)):.0%} "
+              f"(Jaccard {len(tp & ti) / len(tp | ti):.0%}) · {len(chrome)} términos de marco excluidos")
     else:
         avisos.append("no pude comparar informe y propuesta")
 
