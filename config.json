@@ -104,7 +104,7 @@
       "titulo": "El sitio es de una plataforma, no tuyo",
       "descripcion": "El HTML servido carga /websites/14/assets/css/themes/theme-brown_beige.css y el pie dice «DocPlanner.com © 2026». El dominio, los textos y las fotos son tuyos; el sitio es de la plataforma. No podés agregar un botón de WhatsApp, ni cambiar el título con el que aparecés en Google, ni llevarte tus datos. Y arrastra 3 defectos que no dependen de vos: declara el idioma árabe (lang=\"ar\"), no emite datos estructurados y no publica mapa del sitio. Le pasa exactamente lo mismo a 3 de los 5 sitios vivos de colegas de tu categoría.",
       "impacto": "Techo duro de mejora: cualquier cambio depende de un tercero.",
-      "resumen": "CSS /websites/14/…theme-brown_beige.css, pie «DocPlanner.com © 2026», lang=\"ar\".",
+      "resumen": "1 hoja de estilo de plataforma (/websites/14/.../theme-brown_beige.css), pie «DocPlanner.com © 2026» y lang=\"ar\" en un sitio en español.",
       "propongo": "Base — sitio propio en tu dominio, sin una plataforma de terceros en el medio.",
       "significa": "Cada arreglo tiene que pasar por alguien que no sos vos, y así se quedó el idioma en el que no hablás.",
       "tituloCorto": "El sitio es de una plataforma, no tuyo"
