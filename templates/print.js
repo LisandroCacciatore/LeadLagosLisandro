@@ -227,6 +227,8 @@
   }
 
   function kpiRow(kpis) {
+    // §4.1 del spec editorial: máximo 4 números en el cuadro.
+    kpis = (kpis || []).slice(0, 4);
     if (!(kpis || []).length) return null;
     return el('div', 'kpi-row', kpis.map(function (k) {
       return '<div class="kpi"><span class="kpi__value">' + esc(k.valor) +

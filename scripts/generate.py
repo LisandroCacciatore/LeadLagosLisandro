@@ -132,6 +132,8 @@ def alcance_item(texto: str) -> str:
 
 
 def kpi_row(kpis: list) -> str:
+    """§4.1 del spec editorial: máximo 4 números en el cuadro."""
+    kpis = list(kpis)[:4]
     if not kpis:
         return ""
     items = "".join(
@@ -155,7 +157,7 @@ def scenarios(base: int, modulos: list) -> list:
         ("Intermedio", f"Base + {codes[0]} + {codes[1]}", combo2),
         ("Recomendado", f"Base + {codes[0]} + {codes[1]} + {codes[2]}", combo3),
         ("Pack completo", f"Base + los {len(modulos)} módulos", total),
-        ("Pack con descuento", f"Pack completo con 15% de descuento", pack),
+        ("Pack con descuento", "Pack completo con 15 % de descuento", pack),
     ]
 
 
@@ -245,6 +247,7 @@ def sitio_nuevo_html(cfg: dict) -> str:
     return f"""
     <p>{esc(m.get("bajada") or "Así se vería tu sitio, con tus datos reales.")}</p>
     <div class="shot">{media}</div>
+    <p class="shot-cap">{esc(m.get("caption") or "Nuevo — sitio propio, con tus datos reales y verificado.")}</p>
     <div class="cta-row">
       <a class="btn btn-brand" href="{esc(url)}">Abrir el sitio nuevo &rarr;</a>
     </div>"""
@@ -316,6 +319,12 @@ def main() -> int:
         "PASOS_HTML": "".join(f"<li>{esc(p)}</li>" for p in pasos),
         "BASE_ITEMS_HTML": "".join(f"<li>{esc(i)}</li>" for i in base_items),
         "ALCANCE_HTML": "".join(alcance_item(a) for a in cfg.get("alcance", [])),
+        # §7.2 del spec editorial: los límites se separan en lo que medí (✓) y lo que no
+        # pude medir (✗), en una sola sección en vez de tres sueltas.
+        "MEDIDO_HTML": "".join(alcance_item(a) for a in cfg.get("alcance", [])
+                               if str(a).strip().startswith("✓")),
+        "NO_MEDIDO_HTML": "".join(alcance_item(a) for a in cfg.get("alcance", [])
+                                  if not str(a).strip().startswith("✓")),
         "PREGUNTAS_HTML": "".join(f"<li>{esc(p)}</li>" for p in cfg.get("preguntasAbiertas", [])),
         "SIN_INCLUIR_HTML": "".join(f"<li>{esc(p)}</li>" for p in cfg.get("sinIncluir", [])),
         "MODULOS_JSON": json.dumps(modulos, ensure_ascii=False),
@@ -351,7 +360,7 @@ def main() -> int:
         "COMPARATIVO_CIERRE": narrativa(
             "comparativoCierre",
             "No estás solo: el problema es del conjunto. La mejora más barata del rubro "
-            "todavía está apoyada sobre la mesa y nadie la levantó."),
+            "y todavía nadie la levantó."),
         "COSTO_NOTA": narrativa("costoNota", "en la llamada lo validamos con tus números reales, que yo no veo."),
         "PROPUESTA_TITULO": narrativa("propuestaTitulo", "Un sitio tuyo, y los bloques que quieras sumar"),
         "PROPUESTA_INTRO": narrativa(

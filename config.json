@@ -28,7 +28,8 @@
     "titulo": "Sitio nuevo (la página modelo)",
     "bajada": "El sitio completo funcionando: sus fotos reales, la habilitación publicada como texto y WhatsApp en todas las secciones.",
     "cta": "Ver el sitio nuevo",
-    "captura": "02-sitio/capturas/despues-portada.jpg"
+    "captura": "02-sitio/capturas/despues-portada.jpg",
+    "caption": "Nuevo — sitio propio, botón de WhatsApp en cada sección y la habilitación N° 084-60296 como texto."
   },
   "salida": {
     "slug": "lagos"
@@ -47,7 +48,7 @@
     "heroTitulo": "Tu sitio le pide a la gente que te escriba por WhatsApp.<br>Y no tiene WhatsApp.",
     "heroLead": "Lic. Lisandro Lagos: medí tu sitio, medí tu perfil de Doctoralia y medí los 7 sitios de colegas de tu categoría en Rosario, con la misma herramienta y el mismo día. Esto no es una opinión sobre tu diseño. Son 6 cosas medidas, cada una con el número que la respalda.",
     "comparativoTitulo": "Tu categoría en Rosario, medida el mismo día",
-    "comparativoCierre": "No estás solo: el problema es la plataforma. Tres de los cinco sitios vivos de tu categoría arrastran el mismo error de idioma y tampoco emiten datos estructurados. Y ninguno de los siete tiene un botón de WhatsApp. Eso significa que la mejora más barata del rubro está apoyada sobre la mesa y todavía nadie la levantó.",
+    "comparativoCierre": "No estás solo: el problema es la plataforma. Tres de los cinco sitios vivos de tu categoría arrastran el mismo error de idioma y tampoco emiten datos estructurados. Y ninguno de los siete tiene un botón de WhatsApp. Es la mejora más directa del rubro, y el rubro todavía no la hizo.",
     "costoNota": "en la llamada lo validamos con tu agenda real, que yo no veo.",
     "propuestaTitulo": "Un sitio tuyo, y los bloques que quieras sumar",
     "propuestaIntro": "La base es no depender más de la plataforma: sitio propio, tus datos reales, tu certificado como texto y no como foto, y las señales que Google necesita para mostrarte. Los bloques se suman según lo que te duela más y según el presupuesto.",
@@ -78,8 +79,8 @@
     {
       "prioridad": "alta",
       "tipo": "[MEDIDO]",
-      "titulo": "Tu sitio te pide que le escribas por WhatsApp y no tiene WhatsApp",
-      "descripcion": "En «Sobre mí» el propio sitio dice: «Contacto vía mensaje de audio o texto al celular que aparece debajo». Medido sobre el HTML servido: 0 enlaces a WhatsApp (0 apariciones de wa.me) contra 2 enlaces telefónicos. La persona lee la instrucción, busca el botón, no está, y cierra. De los 7 colegas con dominio propio en tu categoría, ninguno publica un botón de WhatsApp: es la ventaja más barata que hoy está sobre la mesa.",
+      "titulo": "Tu sitio te pide WhatsApp. No tiene ningún WhatsApp.",
+      "descripcion": "En «Sobre mí» el propio sitio dice: «Contacto vía mensaje de audio o texto al celular que aparece debajo». Medido sobre el HTML servido: 0 enlaces a WhatsApp (0 apariciones de wa.me) contra 2 enlaces telefónicos. La persona lee la instrucción, busca el botón, no está, y cierra. De los 7 colegas con dominio propio en tu categoría, ninguno publica un botón de WhatsApp: es lo primero que resuelve el rubro.",
       "impacto": "Cada consulta que llega fuera del horario queda sin canal de contacto directo.",
       "resumen": "0 enlaces wa.me y 2 tel:, medido sobre el HTML servido.",
       "propongo": "Módulo M1 — WhatsApp contextual. La base ya incluye el botón con el mensaje escrito; M1 lo hace cambiar según la sección donde esté la persona.",
@@ -100,7 +101,7 @@
     {
       "prioridad": "alta",
       "tipo": "[MEDIDO]",
-      "titulo": "El sitio no es tuyo: es un template compartido de Docplanner",
+      "titulo": "El sitio es de una plataforma, no tuyo",
       "descripcion": "El HTML servido carga /websites/14/assets/css/themes/theme-brown_beige.css y el pie dice «DocPlanner.com © 2026». El dominio, los textos y las fotos son tuyos; el sitio es de la plataforma. No podés agregar un botón de WhatsApp, ni cambiar el título con el que aparecés en Google, ni llevarte tus datos. Y arrastra 3 defectos que no dependen de vos: declara el idioma árabe (lang=\"ar\"), no emite datos estructurados y no publica mapa del sitio. Le pasa exactamente lo mismo a 3 de los 5 sitios vivos de colegas de tu categoría.",
       "impacto": "Techo duro de mejora: cualquier cambio depende de un tercero.",
       "resumen": "CSS /websites/14/…theme-brown_beige.css, pie «DocPlanner.com © 2026», lang=\"ar\".",
@@ -111,7 +112,7 @@
     {
       "prioridad": "alta",
       "tipo": "[MEDIDO]",
-      "titulo": "En Doctoralia tenés 5 opiniones de 5 estrellas; la mediana de tu categoría es 14 y el máximo, 142",
+      "titulo": "Tenés 5 opiniones. La mediana de tu categoría es 14, y el máximo, 142.",
       "descripcion": "Relevé los 35 perfiles de las categorías «Psicoanalista · Rosario» y «Psicólogo · Rosario»: 23 tienen al menos una opinión y 12 ninguna. La mediana de los que tienen es 14 y el máximo 142. Vos tenés 5, todas de cinco estrellas: la calidad está, lo que falta es volumen. Y hay una pista: Lucía Ramos, la que más opiniones tiene (142), es la única del grupo con un sitio propio bien hecho; de los 7 dominios propios que relevé, 2 hoy no resuelven y 1 bloqueó la medición. En tu propio perfil, además, el campo «Tiempo de respuesta aproximado» está vacío.",
       "impacto": "5 opiniones no alcanzan para que un desconocido te elija sobre otro perfil con 142.",
       "resumen": "5 opiniones propias; mediana 14 y máximo 142 entre 35 perfiles relevados.",
@@ -243,10 +244,6 @@
       {
         "valor": "3,5 MB",
         "label": "baja hoy cada visita"
-      },
-      {
-        "valor": "0,7 MB",
-        "label": "bajaría el sitio nuevo"
       },
       {
         "valor": "14 vs 5",
@@ -391,12 +388,11 @@
     ]
   },
   "sinIncluir": [
-    "Fotografía profesional: hoy no hay retrato del profesional y no puedo inventarlo",
-    "Contenido de los ensayos: los textos son tuyos; yo los maqueto y los publico",
-    "Gestión de redes sociales ni de tu perfil de Doctoralia",
-    "Campañas publicitarias pagas",
+    "Rediseño de marca: logo, paleta y tipografías quedan como están",
+    "Reescritura de tus textos: el mensaje ya funciona, se respeta",
+    "Campañas pagas y gestión de redes sociales",
     "Mantenimiento mensual obligatorio: el sitio queda tuyo y funciona sin cuota",
-    "Facturación o historia clínica: el sitio no guarda datos de pacientes"
+    "Carga de testimonios que hoy no existan con autorización firmada"
   ],
   "alcance": [
     "✓ Medí el HTML servido de liclisandrolagos.com el 4 de octubre de 2026, con la herramienta incluida en este repositorio (scripts/medir.py): cada número de este documento se puede reproducir con ese comando.",

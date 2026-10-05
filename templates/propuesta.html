@@ -13,6 +13,8 @@
   overflow:hidden; margin:1rem 0; background:var(--surface-default); }
 .shot-img { display:block; width:100%; height:auto; }
 .shot-frame { display:block; width:100%; height:70vh; min-height:420px; border:0; background:#fff; }
+/* §9.4: toda captura lleva epígrafe — izquierda «Hoy — …», derecha «Nuevo — …». */
+.shot-cap { font-size:var(--fs-sm); color:var(--ink-muted); margin:.5rem 0 0; }
 
 /* ---------- La tabla de colegas pasa a bullets en mobile (§6.2) ---------- */
 @media (max-width:700px){
@@ -59,7 +61,7 @@
     <h2 style="font-size:1.5rem;margin-top:.75rem">{{NUM_HALLAZGOS}} hallazgos medidos</h2>
     <p>
       Cada hallazgo va con el número crudo, qué significa para tu trabajo y qué propongo.
-      Lo que no pude medir, lo digo: no hay una sola afirmación de este documento que no se pueda reproducir.
+      Lo que no pude medir, lo digo: cada afirmación de este documento se puede reproducir con el comando que tiene al lado.
     </p>
     {{HALLAZGOS_HTML}}
   </div>
@@ -88,6 +90,19 @@
       <div class="callout-label">{{CALLOUT_LABEL}}</div>
       <div class="callout-strong">{{CALLOUT_STRONG}}</div>
       <p class="callout-note">{{CALLOUT_NOTE}}</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CTA INTERMEDIO (§7.3 del spec editorial) ══════════════
+     El lector que ya se convenció no tiene que scrollear hasta el final para actuar. -->
+<section class="band band--soft">
+  <div class="wrap wrap--tight">
+    <p style="font-size:var(--fs-lg);font-weight:600;margin-bottom:1rem">
+      Si querés, hablamos. Y si no, seguí leyendo.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-brand" href="{{MAILTO_LLAMADA}}">Agendar 20 minutos &rarr;</a>
     </div>
   </div>
 </section>
@@ -132,12 +147,7 @@
 <!-- ══════════════ 12-13 · QUÉ NO INCLUYE / LO QUE NECESITO ══════════════ -->
 <section class="band band--soft">
   <div class="wrap">
-    <div class="grid-2">
-      <div>
-        <span class="eyebrow">Para que no haya sorpresas</span>
-        <h2 style="font-size:1.25rem;margin-top:.75rem">Qué no incluye</h2>
-        <ul style="font-size:var(--fs-sm)">{{SIN_INCLUIR_HTML}}</ul>
-      </div>
+    <div class="wrap--tight">
       <div>
         <span class="eyebrow">Lo que necesito de vos</span>
         <h2 style="font-size:1.25rem;margin-top:.75rem">{{PREGUNTAS_TITULO}}</h2>
@@ -166,12 +176,20 @@
   </div>
 </section>
 
-<!-- ══════════════ 15 · ALCANCE ══════════════ -->
+<!-- ══════════════ 15 · LÍMITES ══════════════
+     §3.15 del spec v2.0 pide «Alcance de esta revisión»; §7.2 del spec editorial pide
+     consolidar ahí los tres límites (medido / no medido / no incluido). Un solo bloque
+     cumple las dos cosas: antes eran tres secciones que declaraban límites por separado. -->
 <section class="band band--soft">
   <div class="wrap wrap--tight">
     <div class="scope">
-      <div class="scope-label">Alcance de esta revisión — qué miré y qué no</div>
-      <ul>{{ALCANCE_HTML}}</ul>
+      <div class="scope-label">Alcance de esta revisión — límites de este documento</div>
+      <div class="sec-sub">Lo que medí</div>
+      <ul>{{MEDIDO_HTML}}</ul>
+      <div class="sec-sub">Lo que no pude medir</div>
+      <ul>{{NO_MEDIDO_HTML}}</ul>
+      <div class="sec-sub">Lo que no incluye la propuesta</div>
+      <ul>{{SIN_INCLUIR_HTML}}</ul>
     </div>
   </div>
 </section>
