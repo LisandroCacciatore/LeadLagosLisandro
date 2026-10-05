@@ -128,14 +128,19 @@ def main() -> int:
         if "open graph" in t or "twitter card" in t:
             n = len(re.findall(r'property="og:', dom, re.I))
             return n >= 2, f"{n} etiqueta(s) Open Graph"
-        if "descripción" in t or "descripcion" in t:
-            m = re.search(r'name="description"[^>]+content="([^"]{10,})"', dom, re.I)
-            return bool(m), (f"descripción de {len(m.group(1))} caracteres" if m
-                             else "sin meta description con contenido")
-        if "textos alternativos" in t or re.search(r"\balt\b", t):
+        # El alt de las imágenes va ANTES de la regla genérica de «descripción»: si no,
+        # una promesa sobre imágenes se contesta con la meta description del documento
+        # y queda marcada como cumplida sin haberla mirado.
+        if "imágenes" in t or "imagen" in t or re.search(r"\bal\b|\balt\b", t):
             n = len(re.findall(r'<img[^>]+alt="[^"]{3,}"', dom, re.I))
             tot = len(re.findall(r"<img", dom, re.I))
             return (tot > 0 and n == tot), f"{n} de {tot} imágenes con texto alternativo"
+        if "por artículo" in t or "por articulo" in t:
+            return None, "la descripción por artículo se verifica en el blog, no en la home"
+        if "descripción" in t or "descripcion" in t or "títulos" in t:
+            m = re.search(r'name="description"[^>]+content="([^"]{10,})"', dom, re.I)
+            return bool(m), (f"descripción de {len(m.group(1))} caracteres" if m
+                             else "sin meta description con contenido")
         if "idioma" in t:
             m = re.search(r'<html[^>]*\blang="([^"]+)"', dom, re.I)
             return bool(m and m.group(1).lower().startswith("es")), \
