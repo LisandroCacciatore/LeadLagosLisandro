@@ -21,6 +21,13 @@
   "baseCalculo": "1 consulta semanal que no se recupera, a AR$ 60.000 (la tarifa que él mismo publica en su sitio)",
   "comparativos": 7,
 
+  "modelo": {
+    "url": "https://lisandrocacciatore.github.io/LeadLagosLisandro/sitio/",
+    "titulo": "Sitio nuevo (la página modelo)",
+    "bajada": "El sitio completo funcionando: sus fotos reales, la habilitación publicada como texto y WhatsApp en todas las secciones.",
+    "cta": "Ver el sitio nuevo"
+  },
+
   "salida": {
     "slug": "lagos"
   },
