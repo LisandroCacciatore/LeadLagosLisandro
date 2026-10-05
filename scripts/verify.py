@@ -135,8 +135,11 @@ def main() -> int:
     if "compare-table" not in prop:
         errores.append("propuesta: falta la tabla comparativa")
     for h in cfg.get("hallazgos", []):
-        if h.get("titulo", "")[:30] not in prop:
-            errores.append(f"propuesta: falta el hallazgo «{h.get('titulo', '')[:40]}»")
+        # §4: la propuesta titula corto y el informe titula largo. Alcanza con que
+        # aparezca el título que le corresponde a esta pieza.
+        t = h.get("tituloCorto") or h.get("titulo", "")
+        if t[:30] not in prop:
+            errores.append(f"propuesta: falta el hallazgo «{t[:40]}»")
             break
 
     # ---- Invariante 4: ningún placeholder quedó visible
