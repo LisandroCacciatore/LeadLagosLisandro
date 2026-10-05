@@ -134,8 +134,10 @@ def main() -> int:
     # unidad común entre ellos. Menos de 3 sí es un cuadro pobre.
     if n_kpi < 3 or n_kpi > 4:
         errores.append(f"propuesta: el cuadro tiene {n_kpi} indicadores (el spec pide 3 o 4)")
-    if "compare-table" not in prop:
-        errores.append("propuesta: falta la tabla comparativa")
+    # El comparativo puede ser tabla (colegas medidos, §6.2) o 3 bullets (cuando no hay
+    # comparables medidos). Antes bastaba con que la clase apareciera en el CSS.
+    if '<table class="compare-table"' not in prop and "comp-bullets" not in prop:
+        errores.append("propuesta: no hay comparativo (ni tabla de colegas ni bullets §6.2)")
     for h in cfg.get("hallazgos", []):
         # §4: la propuesta titula corto y el informe titula largo. Alcanza con que
         # aparezca el título que le corresponde a esta pieza.

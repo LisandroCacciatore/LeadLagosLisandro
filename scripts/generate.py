@@ -95,6 +95,13 @@ def finding_card(h: dict, idx: int = 0) -> str:
 
 
 def compare_table(comp: dict) -> str:
+    # §6.2 del spec editorial: cuando no hay colegas medidos el mismo día con la misma
+    # herramienta, NO va tabla (y menos una «Agencia vs Esta propuesta», §6.1): van tres
+    # bullets resumen. La tabla se reserva para datos comparables de verdad.
+    bullets = comp.get("bullets")
+    if bullets and not comp.get("filas"):
+        return ('<ul class="comp-bullets">'
+                + "".join(f"<li>{esc(b)}</li>" for b in bullets) + "</ul>")
     cols = comp.get("columnas", [])
     head = "<thead><tr>" + "".join(f"<th>{esc(c)}</th>" for c in cols) + "</tr></thead>"
     rows = []
@@ -361,6 +368,13 @@ def main() -> int:
             "comparativoCierre",
             "No estás solo: el problema es del conjunto. La mejora más barata del rubro "
             "y todavía nadie la levantó."),
+        # §11 del spec editorial: «Lo que dice esta tabla, en una línea» se elimina si
+        # no hay tabla o si no aporta. El bloque entero es opcional.
+        "COMPARATIVO_CIERRE_BLOCK": (
+            '<div class="todo" style="margin-top:1.25rem">'
+            "<strong>Lo que dice esto, en una línea:</strong>"
+            f'<p style="margin:.5rem 0 0">{esc(narrativa("comparativoCierre", ""))}</p>'
+            "</div>" if narrativa("comparativoCierre", "") else ""),
         "COSTO_NOTA": narrativa("costoNota", "en la llamada lo validamos con tus números reales, que yo no veo."),
         "PROPUESTA_TITULO": narrativa("propuestaTitulo", "Un sitio tuyo, y los bloques que quieras sumar"),
         "PROPUESTA_INTRO": narrativa(
