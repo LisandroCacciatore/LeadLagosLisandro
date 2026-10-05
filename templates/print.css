@@ -146,3 +146,12 @@ html, body { margin: 0; padding: 0; background: #fff; }
 @media print {
   .no-print { display: none !important; }
 }
+
+/* ---------- El margen del último bloque no cuenta como alto de hoja ----------
+   Un bloque con margin-bottom en el cierre de la hoja sumaba 11-15px de alto
+   scrolleable sin que nada se viera cortado, y el auto-chequeo del paginador lo
+   reportaba como desborde. El margen no aporta nada al final de una hoja:
+   vale para el último bloque y para el último hijo dentro de él (listas, párrafos). */
+
+.page__body > *:last-child,
+.page__body > *:last-child > *:last-child { margin-bottom: 0; }

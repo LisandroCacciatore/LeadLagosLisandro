@@ -101,7 +101,11 @@ def main() -> int:
         errores.append(f"informe: esperaba {n_hallazgos} hallazgos, hay {n_find}")
     if n_rows != n_modulos:
         errores.append(f"informe: esperaba {n_modulos} filas de módulos, hay {n_rows}")
-    if len(cfg.get("comparativo", {}).get("filas", [])) and n_comp != 1:
+    # El comparativo es opcional: hay configs cuyo comparativo es una tabla de mercado
+    # orientativa, que sólo tiene sentido en la propuesta y no bajo el título «verificado».
+    comp_cfg = cfg.get("comparativo", {})
+    espera_comp = bool(comp_cfg.get("filas")) and comp_cfg.get("mostrarEnInforme") is not False
+    if espera_comp and n_comp != 1:
         errores.append("informe: el comparativo verificado no se renderizó")
     if not (5 <= n_hojas <= 16):
         errores.append(f"informe: el paginador armó {n_hojas} hojas (esperado 5-16)")

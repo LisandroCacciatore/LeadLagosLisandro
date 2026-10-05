@@ -20,13 +20,48 @@
   "costoMensual": "AR$ 240.000",
   "baseCalculo": "1 consulta semanal que no se recupera, a AR$ 60.000 (la tarifa que él mismo publica en su sitio)",
   "comparativos": 7,
+
+  "salida": {
+    "slug": "lagos"
+  },
+
+  "verificacionPDF": {
+    "datos": ["Buenos Aires 1110"],
+    "hojas": [10, 14]
+  },
+
+  "propuesta": {
+    "saludo": "Lisandro",
+    "heroTitulo": "Tu sitio le pide a la gente que te escriba por WhatsApp.<br>Y no tiene WhatsApp.",
+    "heroLead": "Lic. Lisandro Lagos: medí tu sitio, medí tu perfil de Doctoralia y medí los 7 sitios de colegas de tu categoría en Rosario, con la misma herramienta y el mismo día. Esto no es una opinión sobre tu diseño. Son 6 cosas medidas, cada una con el número que la respalda.",
+    "comparativoTitulo": "Tu categoría en Rosario, medida el mismo día",
+    "comparativoCierre": "No estás solo: el problema es la plataforma. Tres de los cinco sitios vivos de tu categoría arrastran el mismo error de idioma y tampoco emiten datos estructurados. Y ninguno de los siete tiene un botón de WhatsApp. Eso significa que la mejora más barata del rubro está apoyada sobre la mesa y todavía nadie la levantó.",
+    "costoNota": "en la llamada lo validamos con tu agenda real, que yo no veo.",
+    "propuestaTitulo": "Un sitio tuyo, y los bloques que quieras sumar",
+    "propuestaIntro": "La base es no depender más de la plataforma: sitio propio, tus datos reales, tu certificado como texto y no como foto, y las señales que Google necesita para mostrarte. Los bloques se suman según lo que te duela más y según el presupuesto.",
+    "baseLabel": "Base — Sitio profesional propio",
+    "preguntasTitulo": "Cuatro datos que no puedo inventar",
+    "cierreTitulo": "Una llamada de veinte minutos",
+    "cierreBody": "No hace falta que decidas nada por mensaje. Veinte minutos alcanzan para revisar los hallazgos, contestar las cuatro preguntas y elegir por dónde empezar.",
+    "conversionTitulo": "Cómo se ubica el número"
+  },
+
+  "callout": {
+    "label": "Costo de no hacer nada",
+    "strong": "Seguir así cuesta AR$ 240.000 por mes.",
+    "note": "Cálculo: 1 consulta semanal que no se recupera, a AR$ 60.000 (la tarifa que él mismo publica en su sitio) · [INFERIBLE] — en la llamada lo validamos con tu agenda real, que yo no veo."
+  },
   "conversion": {
     "tipoCambio": 1551.9,
     "tipoCambioFecha": "4 de octubre de 2026",
     "tipoCambioFuente": "dolarapi.com (dólar bolsa, venta)",
     "tipoCambioDetalle": "USD 1 = AR$ 1.551,90",
     "tarifaSesion": 60000,
-    "tarifaSesionFuente": "liclisandrolagos.com — sección Precios (publicada por el propio profesional)"
+    "tarifaSesionFuente": "liclisandrolagos.com — sección Precios (publicada por el propio profesional)",
+    "unidad": "sesiones",
+    "referenciaEtiqueta": "la tarifa que publicás",
+    "costoMensualNum": 240000,
+    "cierre": "<p class=\"evsrc\">El pack completo ({total}) se paga con {unidades} {unidad}: menos de lo que facturás en tres semanas trabajando a una consulta por día. Y si el sitio recupera una sola consulta por semana, la base de {base} se paga en {recupero} meses.</p>\n    <p class=\"evsrc\">[INFERIBLE] La recuperación depende de tu agenda real, que no veo. El número de {unidad} equivalentes, en cambio, es aritmética sobre datos que vos publicás.</p>"
   },
   "hallazgos": [
     {
@@ -302,7 +337,9 @@
   },
   "imagenes": {
     "antes": "00-auditoria/capturas/antes-portada.jpg",
-    "despues": "02-sitio/capturas/despues-portada.jpg"
+    "despues": "02-sitio/capturas/despues-portada.jpg",
+    "captionAntes": "Hoy — template de plataforma, sin WhatsApp, sin descripción para Google",
+    "captionDespues": "Propuesta — sitio propio, tus fotos reales, tu habilitación como texto"
   },
   "base": {
     "precio": 350,

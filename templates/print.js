@@ -200,7 +200,9 @@
 
   function resolveSections() {
     var comp = cfg.comparativo || {};
-    var tieneComparativo = (comp.filas || []).length > 0;
+    // La tabla puede ser de pares medidos (va al informe) o un comparativo de mercado
+    // orientativo (sólo tiene sentido en la propuesta, no bajo el título "verificado").
+    var tieneComparativo = (comp.filas || []).length > 0 && comp.mostrarEnInforme !== false;
     return ALL_SECTIONS.filter(function (s) {
       return !s.optional || tieneComparativo;
     }).map(function (s, i) {
@@ -263,10 +265,15 @@
       openSheet();
       startOf.resumen = sheets.length;
       body.appendChild(secHead(NUM.resumen, 'Resumen Ejecutivo'));
-      body.appendChild(el('p', 'sec-lead',
-        'Sobre ' + esc(m.url || 'su presencia online') + ' se midieron <strong>' +
-        hallazgos.length + ' hallazgos</strong> que están costando consultas. ' +
-        'El impacto estimado acumulado es de <strong>' + esc(cfg.costoMensual || '') + '</strong> por mes.'));
+      var resumenLead = 'Sobre ' + esc(m.url || 'su presencia online') + ' se midieron <strong>' +
+        hallazgos.length + ' hallazgos</strong> que están costando oportunidades. ';
+      if (cfg.costoMensual) {
+        resumenLead += 'El impacto estimado acumulado es de <strong>' + esc(cfg.costoMensual) + '</strong> por mes.';
+      } else {
+        resumenLead += 'No declaro un impacto en pesos porque no tengo acceso a tus números: ' +
+          'lo que sigue es lo medido, con la cuenta a la vista.';
+      }
+      body.appendChild(el('p', 'sec-lead', resumenLead));
       place(el('ul', '', hallazgos.map(function (h) {
         return '<li><strong>' + esc(h.titulo) + '</strong> — ' + esc(h.impacto) + '</li>';
       }).join('')));
@@ -279,8 +286,8 @@
         '<ul>' +
           '<li><span class="yes">✓</span> <strong>[MEDIDO]</strong>: sale de una medición sobre el HTML servido ' +
             'del sitio, verificable con los comandos que figuran en «Alcance de esta revisión».</li>' +
-          '<li><span class="no">✗</span> <strong>[INFERIBLE]</strong>: es una estimación. El impacto en consultas ' +
-            'depende de la agenda real, que este informe no ve.</li>' +
+          '<li><span class="no">✗</span> <strong>[INFERIBLE]</strong>: es una estimación. El impacto real ' +
+            'depende de tu operación, que este informe no ve.</li>' +
           '<li><span class="no">✗</span> <strong>[NO VERIFICADO]</strong>: no se pudo comprobar y por lo tanto ' +
             'no se afirma. Es el caso de LinkedIn, que responde con muro de registro.</li>' +
         '</ul>'));
@@ -289,15 +296,22 @@
       openSheet();
       startOf.diagnostico = sheets.length;
       body.appendChild(secHead(NUM.diagnostico, 'Diagnóstico'));
-      body.appendChild(el('p', 'sec-lead',
-        'Se analizó el HTML servido de ' + esc(m.url || '') + ' el ' + esc(m.fecha || '') +
-        '. Se comparó contra ' + (cfg.comparativos || 0) + ' sitios de profesionales del mismo rubro, ' +
-        'medidos el mismo día con la misma herramienta. Cada número de este informe es reproducible.'));
+      var nComp = Number(cfg.comparativos || 0);
+      var diagLead = 'Se analizó el HTML servido de ' + esc(m.url || '') + ' el ' + esc(m.fecha || '') + '. ';
+      if (nComp >= 2) {
+        diagLead += 'Se comparó contra ' + nComp + ' referencias del mismo rubro, medidas el mismo día ' +
+          'con la misma herramienta. ';
+      } else if (nComp === 1) {
+        diagLead += 'Se comparó contra una referencia del rubro, con la misma herramienta y el mismo día. ';
+      }
+      diagLead += 'Cada número de este informe es reproducible.';
+      body.appendChild(el('p', 'sec-lead', diagLead));
       body.appendChild(el('div', 'sec-sub', 'Hallazgos'));
       flow(hallazgos.map(findingCard), 'Diagnóstico · continúa');
-      place(callout('Costo de no hacer nada', [
-        'Seguir así cuesta ' + (cfg.costoMensual || '') + ' por mes.',
-        'Cálculo basado en ' + (cfg.baseCalculo || '') + ' · [INFERIBLE]'
+      var co = cfg.callout || {};
+      place(callout(co.label || 'Costo de no hacer nada', [
+        co.strong || ('Seguir así cuesta ' + (cfg.costoMensual || '') + ' por mes.'),
+        co.note || ('Cálculo basado en ' + (cfg.baseCalculo || '') + ' · [INFERIBLE]')
       ]), 'Diagnóstico · continúa');
 
       // --- 03 Comparativo verificado (opcional: sólo si la config lo trae)
@@ -320,12 +334,14 @@
       openSheet();
       startOf.propuesta = sheets.length;
       body.appendChild(secHead(NUM.propuesta, 'Propuesta de Valor'));
-      body.appendChild(el('p', 'sec-lead',
-        'Un sitio profesional propio y módulos de automatización que se suman según prioridad y presupuesto.'));
+      body.appendChild(el('p', 'sec-lead', esc(
+        ((cfg.propuesta || {}).informeLead) ||
+        'Un sitio profesional propio y módulos que se suman según prioridad y presupuesto.')));
       body.appendChild(el('div', 'base-card',
         '<span class="base-flag">Siempre incluida</span>' +
         '<div class="base-head">' +
-          '<span class="base-label">Base — Sitio profesional completo</span>' +
+          '<span class="base-label">' + esc(((cfg.propuesta || {}).baseLabel) ||
+            'Base — Sitio profesional completo') + '</span>' +
           '<span class="base-price">' + money(t.base) + '</span>' +
         '</div>' +
         '<ul>' + ((cfg.base || {}).items || []).map(function (i) {
@@ -436,10 +452,18 @@
         total + ' páginas.</span>'));
 
       // 6. Auto-verificación: ninguna hoja puede quedar con contenido cortado.
+      //
+      // Dos medidas, porque solas mienten:
+      //   · scrollHeight cuenta los margenes de cierre, que no son contenido y no se
+      //     recortan: una diferencia de pocos pixeles ahi es un falso positivo. Por eso
+      //     se tolera un resto chico.
+      //   · La prueba que manda es geometrica: ningún hijo puede cruzar el borde
+      //     inferior real de la hoja. Eso es lo que efectivamente se cortaria al imprimir.
+      var restoMarginal = 4;
       var desbordes = sheets.reduce(function (acc, sheet) {
         var b = sheet.querySelector('.page__body');
         if (!b) return acc;
-        var bad = b.scrollHeight > b.clientHeight + 1;
+        var bad = b.scrollHeight > b.clientHeight + restoMarginal;
         var limit = b.getBoundingClientRect().bottom;
         for (var i = 0; i < b.children.length && !bad; i++) {
           if (b.children[i].getBoundingClientRect().bottom > limit + 1) bad = true;

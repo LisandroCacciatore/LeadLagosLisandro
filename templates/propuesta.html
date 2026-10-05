@@ -17,12 +17,8 @@
 <section class="band band--ink">
   <div class="wrap">
     <span class="eyebrow" style="background:rgba(255,255,255,.14);color:#fff">Propuesta · {{FECHA}} · válida hasta el {{VALIDEZ}}</span>
-    <h1 class="hero-h1" style="margin-top:1.25rem">Tu sitio le pide a la gente que te escriba por WhatsApp.<br>Y no tiene WhatsApp.</h1>
-    <p class="lead" style="color:rgba(255,255,255,.78);max-width:44rem">
-      {{NOMBRE_CLIENTE}}: medí tu sitio, medí tu perfil de Doctoralia y medí los
-      {{NUM_COMPARATIVOS}} sitios de colegas de tu categoría en Rosario, con la misma herramienta y el mismo día.
-      Esto no es una opinión sobre tu diseño. Son {{NUM_HALLAZGOS}} cosas medidas, cada una con el número que la respalda.
-    </p>
+    <h1 class="hero-h1" style="margin-top:1.25rem">{{HERO_TITULO}}</h1>
+    <p class="lead" style="color:rgba(255,255,255,.78);max-width:44rem">{{HERO_LEAD}}</p>
     {{KPI_HTML}}
     <div class="cta-row">
       <a class="btn btn-brand" href="#propuesta">Ver qué propongo</a>
@@ -48,30 +44,25 @@
 <section class="band band--soft">
   <div class="wrap">
     <span class="eyebrow">Dónde estás parado</span>
-    <h2 style="font-size:1.5rem;margin-top:.75rem">Tu categoría en Rosario, medida el mismo día</h2>
+    <h2 style="font-size:1.5rem;margin-top:.75rem">{{COMPARATIVO_TITULO}}</h2>
     <p>{{COMPARATIVO_INTRO}}</p>
     {{COMPARATIVO_HTML}}
     <p class="evsrc">{{COMPARATIVO_NOTA}}</p>
     <p class="evsrc">{{COMPARATIVO_FUENTE}}</p>
     <div class="todo" style="margin-top:1.25rem">
       <strong>Lo que dice esta tabla, en una línea:</strong>
-      <p style="margin:.5rem 0 0">
-        No estás solo: el problema es la plataforma. Tres de los cinco sitios vivos de tu categoría
-        arrastran el mismo error de idioma y tampoco emiten datos estructurados. Y ninguno de los siete
-        tiene un botón de WhatsApp. Eso significa que la mejora más barata del rubro está apoyada sobre
-        la mesa y todavía nadie la levantó.
-      </p>
+      <p style="margin:.5rem 0 0">{{COMPARATIVO_CIERRE}}</p>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ COSTO DE NO HACER NADA ══════════════ -->
+<!-- ══════════════ EL NÚMERO QUE SOSTIENE LA PROPUESTA ══════════════ -->
 <section class="band">
   <div class="wrap wrap--tight">
     <div class="callout">
-      <div class="callout-label">Costo de no hacer nada</div>
-      <div class="callout-strong">Seguir así cuesta {{COSTO_MENSUAL}} por mes.</div>
-      <p class="callout-note">Cálculo: {{BASE_CALCULO}} · [INFERIBLE] — en la llamada lo validamos con tu agenda real, que yo no veo.</p>
+      <div class="callout-label">{{CALLOUT_LABEL}}</div>
+      <div class="callout-strong">{{CALLOUT_STRONG}}</div>
+      <p class="callout-note">{{CALLOUT_NOTE}}</p>
     </div>
   </div>
 </section>
@@ -83,18 +74,14 @@
 <section class="band" id="propuesta">
   <div class="wrap">
     <span class="eyebrow">Qué propongo</span>
-    <h2 style="font-size:1.5rem;margin-top:.75rem">Un sitio tuyo, y los bloques que quieras sumar</h2>
-    <p>
-      La base es no depender más de la plataforma: sitio propio, tus datos reales, tu certificado como
-      texto y no como foto, y las señales que Google necesita para mostrarte. Los bloques se suman
-      según lo que te duela más y según el presupuesto.
-    </p>
+    <h2 style="font-size:1.5rem;margin-top:.75rem">{{PROPUESTA_TITULO}}</h2>
+    <p>{{PROPUESTA_INTRO}}</p>
     <p><strong>Tildá lo que te interese: el total se recalcula solo.</strong></p>
 
     <div class="base-card">
       <span class="base-flag">Siempre incluida</span>
       <div class="base-head">
-        <span class="base-label">Base — Sitio profesional propio</span>
+        <span class="base-label">{{BASE_LABEL}}</span>
         <span class="base-price">USD {{PRECIO_BASE}}</span>
       </div>
       <ul>
@@ -110,8 +97,7 @@
         <div class="total-value" id="total">USD {{PRECIO_BASE}}</div>
         <div class="total-list" id="list">Sitio base</div>
       </div>
-      <a class="btn btn-light no-print"
-         href="mailto:{{AUTHOR_EMAIL}}?subject=Propuesta%20-%20{{NOMBRE_CLIENTE_ENCODED}}&body=Hola%20Lisandro%2C%20me%20interesa%20avanzar%20con%3A%20">
+      <a class="btn btn-light no-print" href="{{MAILTO_INTERESA}}">
         Responder esta propuesta
       </a>
     </div>
@@ -119,7 +105,7 @@
     <h3 style="margin-top:2rem">Escenarios, para no decidir todo de una</h3>
     <ul>{{ESCENARIOS_HTML}}</ul>
 
-    <h3>Cómo se ubica el número</h3>
+    <h3>{{CONVERSION_TITULO}}</h3>
     {{CONVERSION_HTML}}
   </div>
 </section>
@@ -135,7 +121,7 @@
       </div>
       <div>
         <span class="eyebrow">Lo que necesito de vos</span>
-        <h2 style="font-size:1.25rem;margin-top:.75rem">Cuatro datos que no puedo inventar</h2>
+        <h2 style="font-size:1.25rem;margin-top:.75rem">{{PREGUNTAS_TITULO}}</h2>
         <div class="todo">
           <ul>{{PREGUNTAS_HTML}}</ul>
         </div>
@@ -148,14 +134,11 @@
 <section class="band">
   <div class="wrap">
     <span class="eyebrow">Próximo paso</span>
-    <h2 style="font-size:1.5rem;margin-top:.75rem">Una llamada de veinte minutos</h2>
-    <p>
-      No hace falta que decidas nada por mensaje. Veinte minutos alcanzan para revisar los hallazgos,
-      contestar las cuatro preguntas y elegir por dónde empezar.
-    </p>
+    <h2 style="font-size:1.5rem;margin-top:.75rem">{{CIERRE_TITULO}}</h2>
+    <p>{{CIERRE_BODY}}</p>
     <ol class="step-list">{{PASOS_HTML}}</ol>
     <div class="cta-row">
-      <a class="btn btn-ink" href="mailto:{{AUTHOR_EMAIL}}?subject=Propuesta%20-%20{{NOMBRE_CLIENTE_ENCODED}}&body=Hola%20Lisandro%2C%20quiero%20avanzar%20con%3A%20">Responder por correo</a>
+      <a class="btn btn-ink" href="{{MAILTO_AVANZAR}}">Responder por correo</a>
       {{WHATSAPP_CTA_HTML}}
     </div>
     <p style="margin-top:1rem"><small>Si preferís que no te escriba más, respondé «no gracias» y no vuelvo a contactarte. Sin insistencia.</small></p>
@@ -176,7 +159,7 @@
 
 <script>
   window.TIPO_CAMBIO = {{TIPO_CAMBIO}};
-  window.TARIFA_SESION = {{TARIFA_SESION}};
+  window.UNIDAD = "{{UNIDAD}}";
 
   var BASE = {{PRECIO_BASE}};
   var MODULES = {{MODULOS_JSON}};
@@ -235,11 +218,8 @@
     var eq = document.getElementById('equiv');
     if (eq) {
       var tc = Number(window.TIPO_CAMBIO || 0);
-      var ses = Number(window.TARIFA_SESION || 0);
-      if (tc && ses) {
-        eq.textContent = '≈ AR$ ' + Math.round(total * tc).toLocaleString('es-AR') +
-          ' · equivale a ' + (total * tc / ses).toFixed(1).replace('.', ',') + ' sesiones a AR$ ' +
-          ses.toLocaleString('es-AR');
+      if (tc) {
+        eq.textContent = '≈ AR$ ' + Math.round(total * tc).toLocaleString('es-AR');
       }
     }
   }

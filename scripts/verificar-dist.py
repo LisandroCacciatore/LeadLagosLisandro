@@ -37,11 +37,25 @@ CHROME = [
     r"C:\Program Files\Microsoft\Edge\Application\msedge.exe",
 ]
 
-RUTAS = ["/", "/propuesta/", "/sitio/", "/informe/", "/robots.txt"]
-ASSETS = [
-    "/sitio/assets/img/consultorio-principal.jpg",
-    "/sitio/assets/img/favicon.svg",
-]
+def rutas_de(dist: Path) -> list:
+    """Las rutas salen de lo que hay en dist/: no todos los leads publican las mismas
+    piezas, así que no se puede fijar una lista."""
+    rutas = ["/"]
+    for d in sorted(dist.iterdir()):
+        if d.is_dir() and (d / "index.html").exists():
+            rutas.append(f"/{d.name}/")
+    rutas.append("/robots.txt")
+    return rutas
+
+
+def assets_de(dist: Path) -> list:
+    """Los assets del sitio tienen que servirse de verdad: tomo archivos reales de
+    cada carpeta assets/ publicada, sin suponer nombres de cliente."""
+    out = []
+    for d in sorted(dist.glob("*/assets")):
+        archivos = sorted(f for f in d.rglob("*") if f.is_file())[:2]
+        out += [f"/{f.relative_to(dist).as_posix()}" for f in archivos]
+    return out
 
 
 def servir():
@@ -67,12 +81,14 @@ def main() -> int:
 
     httpd = servir()
     errores = []
+    rutas = rutas_de(DIST)
+    assets = assets_de(DIST)
     try:
         print("=" * 66)
         print("  VERIFICANDO EL SITIO PUBLICABLE (dist/)")
         print("=" * 66)
 
-        for ruta in RUTAS + ASSETS:
+        for ruta in rutas + assets:
             status, cuerpo = traer(ruta)
             kb = len(cuerpo) // 1024
             print(f"  {status or 'ERR':>4}  {ruta:<46}{kb:>5} KB")
@@ -95,7 +111,10 @@ def main() -> int:
         if chrome:
             with tempfile.TemporaryDirectory() as tmp:
                 perfil = Path(tmp) / "p"
-                for ruta, nombre in (("/", "portada"), ("/sitio/", "sitio")):
+                aRenderizar = [("/", "portada")]
+                if (DIST / "sitio" / "index.html").exists():
+                    aRenderizar.append(("/sitio/", "sitio"))
+                for ruta, nombre in aRenderizar:
                     dom = subprocess.run(
                         [chrome, "--headless=new", "--disable-gpu", "--no-first-run",
                          f"--user-data-dir={perfil}", "--virtual-time-budget=9000",
@@ -125,7 +144,8 @@ def main() -> int:
         for e in errores:
             print(f"      - {e}")
         return 2
-    print("  ✓ Las 4 rutas y los assets responden 200")
+    print(f"  ✓ Las {len(rutas)} rutas" + (f" y {len(assets)} assets" if assets else "") +
+          " responden 200")
     print("  ✓ Todas las páginas publicadas quedan con noindex")
     print("  ✓ robots.txt bloquea el indexado: el preview no compite con el sitio real")
     return 0

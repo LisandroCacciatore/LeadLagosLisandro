@@ -146,6 +146,28 @@ def scenarios(base: int, modulos: list) -> list:
     ]
 
 
+def brand_override(cfg: dict) -> str:
+    """El color de marca del cliente pisa el default del sistema de diseño.
+    Un solo color en la config: el hover y el fondo suave se derivan."""
+    color = ((cfg.get("branding") or {}).get("colorPrimario") or "").strip()
+    if not re.match(r"^#[0-9a-fA-F]{6}$", color):
+        return ""
+
+    def mezclar(hexc: str, hacia: str, t: float) -> str:
+        a = [int(hexc[i:i + 2], 16) for i in (1, 3, 5)]
+        b = [int(hacia[i:i + 2], 16) for i in (1, 3, 5)]
+        return "#" + "".join(f"{int(round(x + (y - x) * t)):02X}" for x, y in zip(a, b))
+
+    return (
+        "\n/* Identidad del cliente: el color lo pone su config, no el sistema */\n"
+        ":root {\n"
+        f"  --brand-default: {color};\n"
+        f"  --brand-hover:   {mezclar(color, '#000000', 0.16)};\n"
+        f"  --brand-soft:    {mezclar(color, '#FFFFFF', 0.92)};\n"
+        "}\n"
+    )
+
+
 def imagen_uri(path: Path, ancho: int = 900, calidad: int = 72) -> str:
     """Embebe una imagen como data URI JPEG, redimensionada. Sin red, sin archivos sueltos."""
     from PIL import Image
@@ -168,6 +190,8 @@ def shots_band(cfg: dict) -> str:
     pa, pd = ROOT / antes, ROOT / despues
     if not (pa.exists() and pd.exists()):
         return ""
+    cap_antes = imgs.get("captionAntes") or "Hoy — sin los canales y señales que el rubro ya usa"
+    cap_despues = imgs.get("captionDespues") or "Propuesta — sitio propio, con tus datos reales y verificados"
     return f"""
 <section class="band band--soft">
   <div class="wrap">
@@ -178,11 +202,11 @@ def shots_band(cfg: dict) -> str:
     <div class="grid-2">
       <div class="shot">
         <img src="{imagen_uri(pa)}" alt="Sitio actual de {esc(cfg.get('meta', {}).get('nombre'))}">
-        <div class="shot__cap">Hoy — template de plataforma, sin WhatsApp, sin descripción para Google</div>
+        <div class="shot__cap">{esc(cap_antes)}</div>
       </div>
       <div class="shot">
         <img src="{imagen_uri(pd)}" alt="Propuesta de sitio nuevo para {esc(cfg.get('meta', {}).get('nombre'))}">
-        <div class="shot__cap">Propuesta — sitio propio, tus fotos reales, tu habilitación como texto</div>
+        <div class="shot__cap">{esc(cap_despues)}</div>
       </div>
     </div>
   </div>
@@ -190,25 +214,51 @@ def shots_band(cfg: dict) -> str:
 
 
 def conversion_block(cfg: dict, base: int, modulos: list) -> str:
+    """Tabla de conversión a pesos. La unidad (sesiones, consultas, reuniones) sale
+    de la config: no todos los rubros cuentan sesiones."""
     conv = cfg.get("conversion") or {}
     tc = float(conv.get("tipoCambio") or 0)
     ses = int(conv.get("tarifaSesion") or 0)
+    unidad = conv.get("unidad") or "sesiones"
+    ref = conv.get("referenciaEtiqueta") or "la tarifa que publicás"
     if not (tc and ses):
-        return "<p>Sin referencia de cambio declarada: la conversión queda [NO VERIFICADO].</p>"
+        return ("<p>" + (conv.get("sinReferencia") or
+                "Sin referencia de cambio declarada: la conversión a pesos queda [NO VERIFICADO]. "
+                "El número se ubica contra el valor de tu propia hora, que no está publicado — "
+                "lo cerramos en la llamada.") + "</p>")
 
     filas = ""
     for nombre, detalle, usd in scenarios(base, modulos):
         filas += (
             f"<tr><td>{esc(detalle)}</td><td>{money(usd)}</td>"
-            f"<td>AR$ {miles(usd * tc)}</td><td>{dec1(usd * tc / ses)} sesiones</td></tr>"
+            f"<td>AR$ {miles(usd * tc)}</td><td>{dec1(usd * tc / ses)} {esc(unidad)}</td></tr>"
         )
 
     total_all = base + sum(int(m.get("price", 0)) for m in modulos)
-    sesiones_pack = total_all * tc / ses
-    recupero_base = base * tc / 240000
+    unidades_pack = total_all * tc / ses
+
+    cierre = conv.get("cierre")
+    costo_num = float(conv.get("costoMensualNum") or 240000)
+    recupero_base = base * tc / costo_num
+    if cierre:
+        # El texto lo escribe la config, pero los números se calculan acá: si están
+        # escritos a mano se desincronizan en cuanto cambia un precio.
+        cierre_html = (str(cierre)
+                       .replace("{total}", money(total_all))
+                       .replace("{unidades}", dec1(unidades_pack))
+                       .replace("{unidad}", str(unidad))
+                       .replace("{base}", money(base))
+                       .replace("{recupero}", dec1(recupero_base)))
+    else:
+        cierre_html = (
+            f'<p class="evsrc">El pack completo ({money(total_all)}) se paga con '
+            f'{dec1(unidades_pack)} {esc(unidad)}.</p>\n'
+            f'    <p class="evsrc">[INFERIBLE] La recuperación depende de tu agenda real, que no veo. '
+            f'El número de {esc(unidad)} equivalentes, en cambio, es aritmética sobre datos que vos publicás.</p>'
+        )
 
     return f"""
-    <p>Traducido a lo que ya sabés contar, con dos referencias tuyas: la tarifa que publicás
+    <p>Traducido a lo que ya sabés contar, con dos referencias tuyas: {esc(ref)}
        (AR$ {miles(ses)}) y el tipo de cambio del {esc(conv.get('tipoCambioFecha'))}
        ({esc(conv.get('tipoCambioDetalle'))}, fuente: {esc(conv.get('tipoCambioFuente'))}).</p>
     <table class="price-table">
@@ -216,12 +266,7 @@ def conversion_block(cfg: dict, base: int, modulos: list) -> str:
       <tbody>{filas}
       </tbody>
     </table>
-    <p class="evsrc">El pack completo ({money(total_all)}) se paga con {dec1(sesiones_pack)} sesiones:
-       menos de lo que facturás en tres semanas trabajando a una consulta por día.
-       Y si el sitio recupera una sola consulta por semana, la base de {money(base)}
-       se paga en {dec1(recupero_base)} meses.</p>
-    <p class="evsrc">[INFERIBLE] La recuperación depende de tu agenda real, que no veo.
-       El número de sesiones equivalentes, en cambio, es aritmética sobre datos que vos publicás.</p>"""
+    {cierre_html}"""
 
 
 # ---------------------------------------------------------------- main
@@ -254,7 +299,7 @@ def main() -> int:
     total_all = base + sum(int(m.get("price", 0)) for m in modulos)
 
     # ---- marca y fragmentos compartidos
-    brand_css = read(BRAND / "brand.css")
+    brand_css = read(BRAND / "brand.css") + brand_override(cfg)
     print_css = read(TEMPLATES / "print.css")
     logo_svg = read(BRAND / "assets" / "logo.svg")
 
@@ -300,8 +345,58 @@ def main() -> int:
 
     # ---- propuesta: bloques propios
     conv = cfg.get("conversion") or {}
+    prop = cfg.get("propuesta") or {}
+    callout = cfg.get("callout") or {}
+    saludo = prop.get("saludo") or (meta.get("nombre", "").split()[-1] or "")
+    nombre_enc = esc(meta.get("nombre", "")).replace(" ", "%20")
+    saludo_enc = str(saludo).replace(" ", "%20")
+
+    def narrativa(clave: str, default: str) -> str:
+        """Texto narrativo de la propuesta: lo escribe la config, no la plantilla."""
+        return str(prop.get(clave) or default)
+
     propuesta_data = dict(common)
     propuesta_data.update({
+        "HERO_TITULO": narrativa(
+            "heroTitulo",
+            "Tu sitio le pide a la gente que te escriba por WhatsApp.<br>Y no tiene WhatsApp."),
+        "HERO_LEAD": narrativa(
+            "heroLead",
+            f"{esc(meta.get('nombre'))}: medí tu sitio y medí los {comparativos} sitios de "
+            f"referencia del mismo rubro, con la misma herramienta y el mismo día. Esto no es una "
+            f"opinión sobre tu diseño: son {len(hallazgos)} cosas medidas, cada una con el número que la respalda."),
+        "COMPARATIVO_TITULO": narrativa("comparativoTitulo", "Tu categoría, medida el mismo día"),
+        "COMPARATIVO_CIERRE": narrativa(
+            "comparativoCierre",
+            "No estás solo: el problema es del conjunto. La mejora más barata del rubro "
+            "todavía está apoyada sobre la mesa y nadie la levantó."),
+        "COSTO_NOTA": narrativa("costoNota", "en la llamada lo validamos con tus números reales, que yo no veo."),
+        "PROPUESTA_TITULO": narrativa("propuestaTitulo", "Un sitio tuyo, y los bloques que quieras sumar"),
+        "PROPUESTA_INTRO": narrativa(
+            "propuestaIntro",
+            "La base es no depender más de una plataforma de terceros: sitio propio, tus datos reales "
+            "y las señales que Google necesita para mostrarte. Los bloques se suman según lo que más "
+            "te duela y según el presupuesto."),
+        "BASE_LABEL": narrativa("baseLabel", "Base — Sitio profesional propio"),
+        "PREGUNTAS_TITULO": narrativa("preguntasTitulo", "Datos que no puedo inventar"),
+        "CIERRE_TITULO": narrativa("cierreTitulo", "Una llamada de veinte minutos"),
+        "CIERRE_BODY": narrativa(
+            "cierreBody",
+            "No hace falta que decidas nada por mensaje. Veinte minutos alcanzan para revisar los "
+            "hallazgos, contestar las preguntas y elegir por dónde empezar."),
+        "CONVERSION_TITULO": narrativa("conversionTitulo", "Cómo se ubica el número"),
+        "CALLOUT_LABEL": callout.get("label") or "Costo de no hacer nada",
+        "CALLOUT_STRONG": callout.get("strong") or f"Seguir así cuesta {costo_mensual} por mes.",
+        "CALLOUT_NOTE": callout.get("note") or (
+            f"Cálculo: {esc(base_calculo)} · [INFERIBLE] — " + narrativa(
+                "costoNota", "en la llamada lo validamos con tus números reales, que yo no veo.")),
+        "UNIDAD": str(conv.get("unidad") or "sesiones"),
+        "MAILTO_INTERESA": (
+            f"mailto:{esc(author.get('email'))}?subject=Propuesta%20-%20{nombre_enc}"
+            f"&body=Hola%20{saludo_enc}%2C%20me%20interesa%20avanzar%20con%3A%20"),
+        "MAILTO_AVANZAR": (
+            f"mailto:{esc(author.get('email'))}?subject=Propuesta%20-%20{nombre_enc}"
+            f"&body=Hola%20{saludo_enc}%2C%20quiero%20avanzar%20con%3A%20"),
         "COMPARATIVO_HTML": compare_table(comp),
         "COMPARATIVO_INTRO": esc(comp.get("intro", "")),
         "COMPARATIVO_NOTA": esc(comp.get("nota", "")),
@@ -316,10 +411,9 @@ def main() -> int:
         "CONVERSION_HTML": conversion_block(cfg, base, modulos),
         "SHOTS_BAND": shots_band(cfg),
         "TIPO_CAMBIO": str(conv.get("tipoCambio", 0)),
-        "TARIFA_SESION": str(conv.get("tarifaSesion", 0)),
         "WHATSAPP_CTA_HTML": (
             f'<a class="btn btn-wa" href="https://wa.me/{esc(author.get("whatsapp"))}'
-            '?text=Hola%2C%20vi%20la%20propuesta%20para%20Lisandro%20Lagos" rel="noopener" target="_blank">'
+            f'?text=Hola%2C%20vi%20la%20propuesta%20para%20{nombre_enc}" rel="noopener" target="_blank">'
             'Responder por WhatsApp</a>' if author.get("whatsapp") else ""
         ),
     })

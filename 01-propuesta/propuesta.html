@@ -442,6 +442,13 @@ li { margin-bottom: var(--space-2); }
 /* Las reglas de impresión viven en templates/print.css.
    brand.css define la marca; el layout de hoja es responsabilidad del template. */
 
+/* Identidad del cliente: el color lo pone su config, no el sistema */
+:root {
+  --brand-default: #091523;
+  --brand-hover:   #08121D;
+  --brand-soft:    #EBECED;
+}
+
 </style>
 </head>
 <body>
@@ -466,11 +473,7 @@ li { margin-bottom: var(--space-2); }
   <div class="wrap">
     <span class="eyebrow" style="background:rgba(255,255,255,.14);color:#fff">Propuesta · 4 de octubre de 2026 · válida hasta el 3 de noviembre de 2026</span>
     <h1 class="hero-h1" style="margin-top:1.25rem">Tu sitio le pide a la gente que te escriba por WhatsApp.<br>Y no tiene WhatsApp.</h1>
-    <p class="lead" style="color:rgba(255,255,255,.78);max-width:44rem">
-      Lic. Lisandro Lagos: medí tu sitio, medí tu perfil de Doctoralia y medí los
-      7 sitios de colegas de tu categoría en Rosario, con la misma herramienta y el mismo día.
-      Esto no es una opinión sobre tu diseño. Son 6 cosas medidas, cada una con el número que la respalda.
-    </p>
+    <p class="lead" style="color:rgba(255,255,255,.78);max-width:44rem">Lic. Lisandro Lagos: medí tu sitio, medí tu perfil de Doctoralia y medí los 7 sitios de colegas de tu categoría en Rosario, con la misma herramienta y el mismo día. Esto no es una opinión sobre tu diseño. Son 6 cosas medidas, cada una con el número que la respalda.</p>
     <div class="kpi-row"><div class="kpi"><span class="kpi__value">0 de 7</span><span class="kpi__label">con botón de WhatsApp</span></div><div class="kpi"><span class="kpi__value">3,5 MB</span><span class="kpi__label">baja hoy cada visita</span></div><div class="kpi"><span class="kpi__value">0,7 MB</span><span class="kpi__label">bajaría el sitio nuevo</span></div><div class="kpi"><span class="kpi__value">14 vs 5</span><span class="kpi__label">opiniones: mediana vs vos</span></div><div class="kpi"><span class="kpi__value">2 de 7</span><span class="kpi__label">dominios abandonados</span></div></div>
     <div class="cta-row">
       <a class="btn btn-brand" href="#propuesta">Ver qué propongo</a>
@@ -575,17 +578,12 @@ li { margin-bottom: var(--space-2); }
     <p class="evsrc">Medición propia del 4 de octubre de 2026 · reproducible con: python scripts/medir.py --pares 00-auditoria/pares.txt</p>
     <div class="todo" style="margin-top:1.25rem">
       <strong>Lo que dice esta tabla, en una línea:</strong>
-      <p style="margin:.5rem 0 0">
-        No estás solo: el problema es la plataforma. Tres de los cinco sitios vivos de tu categoría
-        arrastran el mismo error de idioma y tampoco emiten datos estructurados. Y ninguno de los siete
-        tiene un botón de WhatsApp. Eso significa que la mejora más barata del rubro está apoyada sobre
-        la mesa y todavía nadie la levantó.
-      </p>
+      <p style="margin:.5rem 0 0">No estás solo: el problema es la plataforma. Tres de los cinco sitios vivos de tu categoría arrastran el mismo error de idioma y tampoco emiten datos estructurados. Y ninguno de los siete tiene un botón de WhatsApp. Eso significa que la mejora más barata del rubro está apoyada sobre la mesa y todavía nadie la levantó.</p>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ COSTO DE NO HACER NADA ══════════════ -->
+<!-- ══════════════ EL NÚMERO QUE SOSTIENE LA PROPUESTA ══════════════ -->
 <section class="band">
   <div class="wrap wrap--tight">
     <div class="callout">
@@ -622,11 +620,7 @@ li { margin-bottom: var(--space-2); }
   <div class="wrap">
     <span class="eyebrow">Qué propongo</span>
     <h2 style="font-size:1.5rem;margin-top:.75rem">Un sitio tuyo, y los bloques que quieras sumar</h2>
-    <p>
-      La base es no depender más de la plataforma: sitio propio, tus datos reales, tu certificado como
-      texto y no como foto, y las señales que Google necesita para mostrarte. Los bloques se suman
-      según lo que te duela más y según el presupuesto.
-    </p>
+    <p>La base es no depender más de la plataforma: sitio propio, tus datos reales, tu certificado como texto y no como foto, y las señales que Google necesita para mostrarte. Los bloques se suman según lo que te duela más y según el presupuesto.</p>
     <p><strong>Tildá lo que te interese: el total se recalcula solo.</strong></p>
 
     <div class="base-card">
@@ -648,8 +642,7 @@ li { margin-bottom: var(--space-2); }
         <div class="total-value" id="total">USD 350</div>
         <div class="total-list" id="list">Sitio base</div>
       </div>
-      <a class="btn btn-light no-print"
-         href="mailto:lisandrocacciatore@gmail.com?subject=Propuesta%20-%20Lic.%20Lisandro%20Lagos&body=Hola%20Lisandro%2C%20me%20interesa%20avanzar%20con%3A%20">
+      <a class="btn btn-light no-print" href="mailto:lisandrocacciatore@gmail.com?subject=Propuesta%20-%20Lic.%20Lisandro%20Lagos&body=Hola%20Lisandro%2C%20me%20interesa%20avanzar%20con%3A%20">
         Responder esta propuesta
       </a>
     </div>
@@ -667,12 +660,8 @@ li { margin-bottom: var(--space-2); }
       <tbody><tr><td>Base sola</td><td>USD 350</td><td>AR$ 543.165</td><td>9,1 sesiones</td></tr><tr><td>Base + M1 + M2</td><td>USD 550</td><td>AR$ 853.545</td><td>14,2 sesiones</td></tr><tr><td>Base + M1 + M2 + M3</td><td>USD 650</td><td>AR$ 1.008.735</td><td>16,8 sesiones</td></tr><tr><td>Base + los 6 módulos</td><td>USD 900</td><td>AR$ 1.396.710</td><td>23,3 sesiones</td></tr><tr><td>Pack completo con 15% de descuento</td><td>USD 765</td><td>AR$ 1.187.204</td><td>19,8 sesiones</td></tr>
       </tbody>
     </table>
-    <p class="evsrc">El pack completo (USD 900) se paga con 23,3 sesiones:
-       menos de lo que facturás en tres semanas trabajando a una consulta por día.
-       Y si el sitio recupera una sola consulta por semana, la base de USD 350
-       se paga en 2,3 meses.</p>
-    <p class="evsrc">[INFERIBLE] La recuperación depende de tu agenda real, que no veo.
-       El número de sesiones equivalentes, en cambio, es aritmética sobre datos que vos publicás.</p>
+    <p class="evsrc">El pack completo (USD 900) se paga con 23,3 sesiones: menos de lo que facturás en tres semanas trabajando a una consulta por día. Y si el sitio recupera una sola consulta por semana, la base de USD 350 se paga en 2,3 meses.</p>
+    <p class="evsrc">[INFERIBLE] La recuperación depende de tu agenda real, que no veo. El número de sesiones equivalentes, en cambio, es aritmética sobre datos que vos publicás.</p>
   </div>
 </section>
 
@@ -701,10 +690,7 @@ li { margin-bottom: var(--space-2); }
   <div class="wrap">
     <span class="eyebrow">Próximo paso</span>
     <h2 style="font-size:1.5rem;margin-top:.75rem">Una llamada de veinte minutos</h2>
-    <p>
-      No hace falta que decidas nada por mensaje. Veinte minutos alcanzan para revisar los hallazgos,
-      contestar las cuatro preguntas y elegir por dónde empezar.
-    </p>
+    <p>No hace falta que decidas nada por mensaje. Veinte minutos alcanzan para revisar los hallazgos, contestar las cuatro preguntas y elegir por dónde empezar.</p>
     <ol class="step-list"><li>Confirmar cuatro datos que hoy no puedo verificar y que van al sitio: correo de contacto, días y horarios de atención, si se emiten facturas para reintegro (tu perfil de Doctoralia dice que atendés sólo pacientes particulares) y qué plataforma preferís para reservar turnos.</li><li>Llamada de 20 minutos para revisar juntos los 6 hallazgos y elegir qué bloques activar primero.</li><li>Construcción del sitio base y de los módulos elegidos, con publicación de prueba en un enlace que puedas abrir desde el celular.</li><li>Publicación en tu dominio, verificación de indexación en Google, y entrega con una sesión de 1 hora de capacitación y 30 días de soporte.</li></ol>
     <div class="cta-row">
       <a class="btn btn-ink" href="mailto:lisandrocacciatore@gmail.com?subject=Propuesta%20-%20Lic.%20Lisandro%20Lagos&body=Hola%20Lisandro%2C%20quiero%20avanzar%20con%3A%20">Responder por correo</a>
@@ -733,7 +719,7 @@ li { margin-bottom: var(--space-2); }
 
 <script>
   window.TIPO_CAMBIO = 1551.9;
-  window.TARIFA_SESION = 60000;
+  window.UNIDAD = "sesiones";
 
   var BASE = 350;
   var MODULES = [{"id": "m1", "code": "M1", "icon": "chat", "title": "WhatsApp contextual", "price": 80, "short": "El botón que hoy el sitio te pide y no tiene, con el mensaje ya escrito.", "bullets": ["Botón flotante en todas las secciones", "El texto del mensaje cambia según dónde está la persona (turno, honorarios, consultorio)", "Abre en un clic desde el celular, sin copiar el número", "Sin costo mensual de plataforma"]}, {"id": "m2", "code": "M2", "icon": "notifications_active", "title": "Recordatorios automáticos de turno", "price": 120, "short": "Bajan las ausencias sin que escribas un mensaje más.", "bullets": ["Aviso 24 horas antes del turno", "Confirmación automática al agendar", "Reagendado en dos toques", "Sirve para presencial y para online"]}, {"id": "m3", "code": "M3", "icon": "calendar_month", "title": "Agenda online sincronizada", "price": 100, "short": "Tus pacientes reservan solos, a cualquier hora, en la agenda que ya usás.", "bullets": ["Sincronización con Google Calendar", "Bloqueo automático de horarios ya tomados", "Zona horaria automática para pacientes del exterior", "Se puede convivir con Doctoralia o reemplazarla"]}, {"id": "m4", "code": "M4", "icon": "search", "title": "SEO estructurado y Perfil de Empresa en Google", "price": 100, "short": "Que Google entienda quién sos y te muestre cuando te buscas.", "bullets": ["Datos estructurados de psicólogo y persona (schema.org)", "Descripción para buscadores, Open Graph y Twitter Cards", "sitemap.xml y robots.txt", "Alta y verificación en Google Search Console"]}, {"id": "m5", "code": "M5", "icon": "receipt_long", "title": "Página de honorarios y encuadre económico", "price": 60, "short": "Qué cuesta, cómo se paga y qué documentación se entrega, dicho sin vueltas.", "bullets": ["Honorarios visibles y sin ambigüedad", "Modalidad de pago y de coordinación de turnos", "Qué documentación se entrega (a definir con el profesional)", "Baja las consultas que no llegan a turno"]}, {"id": "m6", "code": "M6", "icon": "edit_note", "title": "Sección Clínica y ensayos", "price": 90, "short": "Tus propios textos de LinkedIn, en tu sitio, sin depender de la red social.", "bullets": ["Sección de ensayos y notas clínicas con autoría", "Carga desde tus publicaciones reales, sin inventar métricas", "Buscador y etiquetas por tema", "Capacitación de 1 hora + manual para publicar solo"]}];
@@ -792,11 +778,8 @@ li { margin-bottom: var(--space-2); }
     var eq = document.getElementById('equiv');
     if (eq) {
       var tc = Number(window.TIPO_CAMBIO || 0);
-      var ses = Number(window.TARIFA_SESION || 0);
-      if (tc && ses) {
-        eq.textContent = '≈ AR$ ' + Math.round(total * tc).toLocaleString('es-AR') +
-          ' · equivale a ' + (total * tc / ses).toFixed(1).replace('.', ',') + ' sesiones a AR$ ' +
-          ses.toLocaleString('es-AR');
+      if (tc) {
+        eq.textContent = '≈ AR$ ' + Math.round(total * tc).toLocaleString('es-AR');
       }
     }
   }

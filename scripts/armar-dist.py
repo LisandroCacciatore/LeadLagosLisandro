@@ -1,32 +1,36 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-armar-dist.py · arma el sitio que se publica en GitHub Pages.
+armar-dist.py · arma el sitio que se publica en GitHub Pages, para cualquier lead.
 
-Junta las tres piezas en un solo sitio navegable:
+Junta las piezas disponibles en un solo sitio navegable:
 
     dist/
-    ├── index.html        portada de entrega: las tres piezas enlazadas
+    ├── index.html        portada de entrega: las piezas enlazadas
     ├── propuesta/        la propuesta comercial
-    ├── sitio/            el sitio nuevo (con sus assets)
     ├── informe/          el informe de auditoría
+    ├── sitio/            el sitio nuevo, si ya está construido (con sus assets)
     ├── robots.txt        Disallow: /  — el preview NO se indexa
     └── .nojekyll         para que Pages no procese nada con Jekyll
 
-Regla de oro: **el preview va con noindex**. Mientras el sitio tenga datos
-provistos por el cliente (teléfono, dirección, opiniones) y esté publicado en un
-dominio que no es el suyo, no puede competir en Google con el sitio real. El
-indexado se abre recién cuando el sitio se publica en liclisandrolagos.com.
+Regla de oro: **el preview va con noindex**. Mientras tenga datos provistos por el
+cliente (teléfono, dirección, opiniones) y esté publicado en un dominio que no es el
+suyo, no puede competir en Google con el sitio real. El indexado se abre recién cuando
+el sitio se publica en el dominio del cliente.
 
-Eso se aplica acá, no en los archivos fuente: en `02-sitio/index.html` la
-etiqueta sigue diciendo `index, follow`, porque ése es el archivo que va al
-dominio del cliente.
+Eso se aplica acá, no en los archivos fuente: en `02-sitio/index.html` la etiqueta
+sigue diciendo `index, follow`, porque ése es el archivo que va al dominio del cliente.
+
+Todo lo que cambia entre clientes sale de config.json. El sitio es opcional: hay leads
+cuya propuesta todavía no incluye un sitio nuevo, y publicar sólo la propuesta y el
+informe es un entregable válido.
 
 Uso:
     python scripts/armar-dist.py
 """
 
 import html
+import json
 import re
 import shutil
 import sys
@@ -35,37 +39,65 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
 BRAND_CSS = ROOT / "brand" / "brand.css"
+CONFIG = ROOT / "config.json"
 
 NOINDEX = '<meta name="robots" content="noindex, nofollow">'
-
-PIEZAS = [
-    {
-        "slug": "propuesta",
-        "titulo": "Propuesta comercial",
-        "bajada": "Qué medí, qué encontré y qué propongo. Con selector de bloques: "
-                  "el total se recalcula al tildar. Incluye el antes y el después.",
-        "origen": ROOT / "01-propuesta" / "propuesta.html",
-    },
-    {
-        "slug": "sitio",
-        "titulo": "Sitio nuevo",
-        "bajada": "El sitio funcionando: datos reales, las fotos del consultorio, "
-                  "la habilitación publicada como texto y WhatsApp en todas las secciones.",
-        "origen": ROOT / "02-sitio" / "index.html",
-    },
-    {
-        "slug": "informe",
-        "titulo": "Informe de auditoría",
-        "bajada": "Documento de 12 hojas con los 6 hallazgos medidos, el comparativo "
-                  "contra los colegas de la categoría y el alcance de la revisión.",
-        "origen": ROOT / "00-auditoria" / "informe.html",
-    },
-]
-
-# Cada pieza se publica como index.html dentro de su carpeta: /propuesta/, /sitio/,
-# /informe/. Si se dejara con el nombre original, /propuesta/ devolvería el listado
-# del directorio en vez de la página.
 ARCHIVO = "index.html"
+
+
+def brand_override(cfg: dict) -> str:
+    """El color del cliente pisa el default del sistema, igual que en las piezas."""
+    color = ((cfg.get("branding") or {}).get("colorPrimario") or "").strip()
+    if not re.match(r"^#[0-9a-fA-F]{6}$", color):
+        return ""
+
+    def mezclar(hexc: str, hacia: str, t: float) -> str:
+        a = [int(hexc[i:i + 2], 16) for i in (1, 3, 5)]
+        b = [int(hacia[i:i + 2], 16) for i in (1, 3, 5)]
+        return "#" + "".join(f"{int(round(x + (y - x) * t)):02X}" for x, y in zip(a, b))
+
+    return (
+        "\n/* Identidad del cliente */\n:root {\n"
+        f"  --brand-default: {color};\n"
+        f"  --brand-hover:   {mezclar(color, '#000000', 0.16)};\n"
+        f"  --brand-soft:    {mezclar(color, '#FFFFFF', 0.92)};\n"
+        "}\n"
+    )
+
+
+def piezas(cfg: dict) -> list:
+    """Las piezas que este lead realmente tiene. El orden es el de la portada."""
+    n_hall = len(cfg.get("hallazgos", []))
+    preview = cfg.get("preview") or {}
+    lista = [
+        {
+            "slug": "propuesta",
+            "titulo": preview.get("tituloPropuesta") or "Propuesta comercial",
+            "bajada": preview.get("bajadaPropuesta") or
+                      "Qué se midió, qué se encontró y qué se propone. Con selector de "
+                      "bloques: el total se recalcula al tildar.",
+            "origen": ROOT / "01-propuesta" / "propuesta.html",
+        },
+    ]
+    sitio = ROOT / "02-sitio" / "index.html"
+    if sitio.exists():
+        lista.append({
+            "slug": "sitio",
+            "titulo": preview.get("tituloSitio") or "Sitio nuevo",
+            "bajada": preview.get("bajadaSitio") or
+                      "El sitio funcionando: datos reales, las fotos propias y el contacto "
+                      "directo en todas las secciones.",
+            "origen": sitio,
+        })
+    lista.append({
+        "slug": "informe",
+        "titulo": preview.get("tituloInforme") or "Informe de auditoría",
+        "bajada": preview.get("bajadaInforme") or
+                  f"Documento A4 con los {n_hall} hallazgos medidos, el comparativo y el "
+                  "alcance de la revisión.",
+        "origen": ROOT / "00-auditoria" / "informe.html",
+    })
+    return lista
 
 
 def con_noindex(texto: str) -> str:
@@ -75,7 +107,10 @@ def con_noindex(texto: str) -> str:
     return re.sub(r"(<head[^>]*>)", r"\1\n" + NOINDEX, texto, count=1, flags=re.I)
 
 
-def portada(brand_css: str) -> str:
+def portada(css: str, cfg: dict, lista: list) -> str:
+    meta = cfg.get("meta") or {}
+    nombre = meta.get("nombre", "Lead")
+    fecha = meta.get("fecha", "")
     tarjetas = "".join(
         f"""
         <a class="tarjeta" href="{p['slug']}/">
@@ -84,17 +119,17 @@ def portada(brand_css: str) -> str:
           <p>{html.escape(p['bajada'])}</p>
           <span class="tarjeta__ir">Abrir &rarr;</span>
         </a>"""
-        for i, p in enumerate(PIEZAS, start=1)
+        for i, p in enumerate(lista, start=1)
     )
     return f"""<!DOCTYPE html>
 <html lang="es-AR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lead Lagos Lisandro — auditoría, propuesta y sitio</title>
+<title>Lead {html.escape(nombre)} — auditoría y propuesta</title>
 {NOINDEX}
 <style>
-{brand_css}
+{css}
 /* Portada de entrega: sólo disposición, los colores salen de la marca. */
 body {{ background: var(--surface-alt); }}
 .portada {{ max-width: 60rem; margin: 0 auto; padding: var(--space-12) var(--space-6); }}
@@ -120,11 +155,11 @@ body {{ background: var(--surface-alt); }}
 <body>
 <main class="portada">
   <span class="sello">Preview con indexado bloqueado</span>
-  <h1>Lic. Lisandro Lagos</h1>
+  <h1>{html.escape(nombre)}</h1>
   <p class="lead">
-    Auditoría, propuesta comercial y sitio nuevo. Todo lo que sigue está medido sobre el
-    sitio y el perfil públicos del profesional: cada número se puede reproducir con los
-    comandos que figuran en el informe.
+    Auditoría medida y propuesta comercial. Todo lo que sigue está medido sobre el sitio y
+    los perfiles públicos del profesional: cada número se puede reproducir con los comandos
+    que figuran en el informe.
   </p>
 
   <div class="grid">{tarjetas}</div>
@@ -133,7 +168,7 @@ body {{ background: var(--surface-alt); }}
     Estas páginas están marcadas con <code>noindex</code> y el sitio las excluye por
     <code>robots.txt</code>: mientras sea un preview, no compite en Google con el sitio real
     del profesional. El indexado se abre recién cuando el sitio se publique en su dominio.
-    Medición del 4 de octubre de 2026.
+    Medición del {html.escape(fecha)}.
   </p>
 </main>
 </body>
@@ -142,6 +177,12 @@ body {{ background: var(--surface-alt); }}
 
 
 def main() -> int:
+    if not CONFIG.exists():
+        print("ERROR: falta config.json")
+        return 1
+    cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
+    lista = piezas(cfg)
+
     if DIST.exists():
         shutil.rmtree(DIST)
     DIST.mkdir(parents=True)
@@ -153,7 +194,7 @@ def main() -> int:
     print(f"{'pieza':<14}{'archivos':>10}{'KB':>8}")
     print("-" * 34)
 
-    for pieza in PIEZAS:
+    for pieza in lista:
         origen, slug = pieza["origen"], pieza["slug"]
         if not origen.exists():
             print(f"  ✗ falta {origen.relative_to(ROOT)} — generá las piezas primero")
@@ -174,7 +215,8 @@ def main() -> int:
         kb = sum(f.stat().st_size for f in destino_dir.rglob("*") if f.is_file()) // 1024
         print(f"{slug:<14}{archivos:>10}{kb:>8}")
 
-    (DIST / "index.html").write_text(portada(BRAND_CSS.read_text(encoding="utf-8")), encoding="utf-8")
+    css = BRAND_CSS.read_text(encoding="utf-8") + brand_override(cfg)
+    (DIST / "index.html").write_text(portada(css, cfg, lista), encoding="utf-8")
     (DIST / "robots.txt").write_text(
         "# Preview: no se indexa mientras sea una maqueta con datos del cliente.\n"
         "User-agent: *\n"
@@ -193,22 +235,22 @@ def main() -> int:
             errores.append(f"{f.relative_to(DIST)} todavía dice index, follow")
     if "Disallow: /" not in (DIST / "robots.txt").read_text(encoding="utf-8"):
         errores.append("dist/robots.txt no bloquea el indexado")
-    for pieza in PIEZAS:
+    for pieza in lista:
         if not (DIST / pieza["slug"] / ARCHIVO).exists():
             errores.append(f"falta {pieza['slug']}/{ARCHIVO}")
-    if not (DIST / "sitio" / "assets" / "img").is_dir():
-        errores.append("al sitio le faltan los assets")
+    if (DIST / "sitio").is_dir() and not (DIST / "sitio" / "assets" / "img").is_dir():
+        errores.append("el sitio quedó sin sus assets")
 
     print("-" * 34)
     total = sum(1 for f in DIST.rglob("*") if f.is_file())
     kb = sum(f.stat().st_size for f in DIST.rglob("*") if f.is_file()) // 1024
-    print(f"dist/: {total} archivos, {kb} KB")
+    print(f"dist/: {total} archivos, {kb} KB  ({len(lista)} piezas)")
     if errores:
         print("  ✗ EL PREVIEW QUEDARÍA INDEXABLE O INCOMPLETO")
         for e in errores:
             print(f"      - {e}")
         return 2
-    print("  ✓ Las 3 piezas están y todas quedan con noindex")
+    print(f"  ✓ Las {len(lista)} piezas están y todas quedan con noindex")
     print("  ✓ robots.txt del preview bloquea el indexado")
     return 0
 
