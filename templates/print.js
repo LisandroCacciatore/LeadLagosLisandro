@@ -49,11 +49,10 @@
     var base = Number((cfg.base || {}).precio || 0);
     var mods = cfg.modulos || [];
     var sum = mods.reduce(function (a, m) { return a + priceOf(m); }, 0);
-    var pack = Math.round((base + sum) * 0.85 / 5) * 5;
     var p = mods.map(priceOf);
     var combo2 = base + (p[0] || 0) + (p[1] || 0);
     var combo3 = combo2 + (p[2] || 0);
-    return { base: base, sum: sum, total: base + sum, pack: pack, combo2: combo2, combo3: combo3 };
+    return { base: base, sum: sum, total: base + sum, combo2: combo2, combo3: combo3 };
   }
 
   // ---------------- Paginador ----------------
