@@ -26,10 +26,9 @@
   "modelo": {
     "url": "https://lisandrocacciatore.github.io/LeadLagosLisandro/sitio/",
     "titulo": "Sitio nuevo (la página modelo)",
-    "bajada": "El sitio completo funcionando: sus fotos reales, la habilitación publicada como texto y WhatsApp en todas las secciones.",
-    "cta": "Ver el sitio nuevo",
-    "captura": "02-sitio/capturas/despues-portada.jpg",
-    "caption": "Nuevo — sitio propio, botón de WhatsApp en cada sección y la habilitación N° 084-60296 como texto."
+    "bajada": "El sitio está funcionando. No es un boceto.",
+    "cta": "Abrir el sitio nuevo",
+    "invitacion": "Abrilo y recorrélo: tus fotos reales, la habilitación publicada como texto y WhatsApp en todas las secciones."
   },
   "salida": {
     "slug": "lagos"
