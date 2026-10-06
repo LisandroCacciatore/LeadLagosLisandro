@@ -1,151 +1,142 @@
-# Lead Lagos Lisandro
+# motor-leads
 
-Auditoría, propuesta comercial y sitio nuevo para el **Lic. Lisandro Lagos**,
-psicólogo clínico y psicoanalista en Rosario (Matrícula Provincial N° 5677).
-
-Un solo repositorio, tres entregables, una sola fuente de datos: `config.json`.
-**Ningún número de este repositorio está escrito a mano**: todos salen de una medición
-que se puede volver a correr con los scripts que están acá.
-
-Fecha de la medición: **4 de octubre de 2026**.
+Motor de auditorías y propuestas comerciales para profesionales.
+Este repo es la **plantilla**: cada lead es una copia (`~/lead-<cliente>`).
 
 ---
 
-## Los entregables
+## El estándar
 
-| Entregable | Archivo | Qué es |
-|---|---|---|
-| **Informe de auditoría** | `00-auditoria/informe.html` | Documento A4 con membrete y pie en cada hoja, listo para imprimir a PDF. 12 páginas. |
-| **Informe en PDF** | `00-auditoria/informe-lagos.pdf` | El mismo informe ya exportado. |
-| **Propuesta comercial** | `01-propuesta/propuesta.html` | Una sola página, con selector de módulos: el total se recalcula al tildar. Incluye la banda de antes/después. |
-| **Sitio nuevo** | `02-sitio/index.html` | El sitio propuesto, funcionando: datos reales, fotos reales del consultorio, SEO completo. |
-| **Evidencia** | `00-auditoria/evidencia.json` | Todo lo medido, legible por máquina. |
-| **Fuentes** | `00-auditoria/fuentes.md` | Ledger: qué se miró, qué se midió y qué **no** se pudo verificar. |
-| **Capturas** | `00-auditoria/capturas/`, `02-sitio/capturas/` | Sitio actual y sitio nuevo, en escritorio y celular. |
-
-## Cómo se lee el repositorio
-
-```
-lead-lagos-lisandro/
-├── config.json                  EL CONTRATO. Hallazgos, módulos, precios, alcance.
-├── 00-auditoria/                la auditoría
-│   ├── informe.html             generado
-│   ├── informe-lagos.pdf        exportado del anterior
-│   ├── evidencia.json           consolidado, legible por máquina
-│   ├── evidencia-web.json       medición cruda del cliente y de los 6 pares
-│   ├── evidencia-doctoralia.json  35 perfiles de Rosario
-│   ├── evidencia-antes-despues.json  señales antes/después
-│   ├── fuentes.md               ledger de fuentes y descartes
-│   ├── pares.txt                los colegas comparados
-│   ├── fuentes/                 fotos y certificado, copiados sin retoque
-│   └── capturas/                evidencia visual
-├── 01-propuesta/                la propuesta comercial
-│   └── propuesta.html           generado
-├── 02-sitio/                    el sitio nuevo
-│   ├── index.html
-│   ├── robots.txt · sitemap.xml
-│   ├── assets/img/              imágenes optimizadas
-│   └── capturas/
-├── brand/                       la marca (fuente única de lo visual)
-├── templates/                   informe.html · print.js · print.css · propuesta.html
-└── scripts/                     el motor
-```
-
-## Cómo se regenera todo
+Un entregable son **dos piezas**, y se genera con **un comando**:
 
 ```bash
-python scripts/preparar-assets.py        # fotos y certificado -> 02-sitio/assets/img
-python scripts/generar.sh                # informe.html + propuesta.html desde config.json
-python scripts/verify.py                 # render real: paginación y selector (Chrome headless)
-python scripts/verificar-sitio.py        # sitio nuevo: señales, DOM, capturas
-python scripts/consolidar-evidencia.py   # 00-auditoria/evidencia.json
+bash scripts/verificar-todo.sh
 ```
 
-Y para volver a medir las fuentes externas:
+Las reglas de fondo están en los dos specs, que son la fuente de verdad:
+**`SPEC-workflow-audit-propuesta.md`** (orden, precios, promesas) y
+**`SPEC-editorial.md`** (tono, patrones, tipografía).
+
+| Pieza | Qué es | Dónde |
+|---|---|---|
+| **Informe de Valor** | solo diagnóstico, **sin precios** (§4 del spec) | `00-auditoria/informe-<slug>.pdf` |
+| **Propuesta** | oferta: base + módulos + escenarios, en USD | `01-propuesta/propuesta-<slug>.pdf` |
+
+Si ese comando sale en verde, el entregable es publicable.
+Si algo falla, **no hay entregable** — y no se manda "casi".
+
+Ese script corre los seis gates en orden y resume al final, así que un rojo
+temprano no esconde los demás:
+
+```
+1/6  construir          generate + precios + render
+2/6  spec del workflow  orden, promesas de base, fechas, solo USD
+3/6  spec editorial     tono, patrón de hallazgos, mobile, tipografía
+4/6  promesas           lo prometido contra el sitio publicado
+5/6  PDF del informe    hojas, membrete repetido, sin precios
+6/6  PDF de la propuesta
+```
+
+`generar.sh` suelto solo **construye**: sirve para iterar contenido sin pagar
+el costo de los seis gates. No exporta PDF y no reclama que el documento esté
+bien.
+
+---
+
+## Las reglas de diseño (no se tocan por cliente)
+
+La identidad vive en **`brand/brand.css`** — fuente única. Ningún template
+declara colores, fuentes ni medidas propias.
+
+**Dos roles de color, no uno.** `--navy` es la **estructura** (títulos, reglas,
+botones, membrete) y es fija: es la identidad del expediente. El **acento** es
+lo que señala (eyebrows, métricas, badges) y lo puede pisar el cliente desde
+`branding.colorPrimario` de su config. Si el acento del cliente es casi el mismo
+navy, **queda invisible**: hay que compararlos antes de publicar.
+
+**El documento es de quien lo firma.** El membrete, el pie y el acento son la
+identidad de Lisandro; la marca del cliente va *adentro*, en lo que se muestra.
+
+**Las fuentes van embebidas como data URI** (`scripts/bajar-fuentes.py`), igual
+que las imágenes. Sin red y sin archivos sueltos: el PDF sale igual en cualquier
+máquina. Inter y JetBrains Mono son **variables** — Google devuelve el mismo
+archivo para cada peso, así que se guarda uno por familia y se declara con un
+rango (`font-weight: 100 900`). Declararlas por peso hace que el navegador
+sintetice el peso y salga todo igual de grueso.
+
+**Cero border-radius, sin sombras.** El lenguaje es editorial, no de app.
+
+**El sitio nuevo va con botón, no con captura.** La captura se ve chica, se
+corta al paginar y no reemplaza al clic: el que la mira igual tiene que
+scrollear hasta el botón. Va el bloque `.portal` con el botón grande y la
+dirección visible (el PDF también se lee en papel). El link viaja como anotación
+clickeable en el PDF. **Nunca un `<iframe>`**: Chrome no los imprime y queda un
+recuadro vacío.
+
+**El membrete se repite en cada hoja.** Cualquier palabra del folio que también
+sea nombre de sección rompe el chequeo de orden de secciones del PDF.
+
+---
+
+## Cómo nace un lead
 
 ```bash
-python scripts/medir.py --pares 00-auditoria/pares.txt --out 00-auditoria/evidencia-web.json
-python scripts/pesar.py https://www.liclisandrolagos.com/
-python scripts/diagnostico-desborde.py 02-sitio/index.html 390
-python scripts/movil.py 02-sitio/index.html 390
-python scripts/capturar.py
+cp -r ~/motor-leads ~/lead-<cliente>          # o usar scripts/nuevo-lead.py
+python scripts/nuevo-lead.py --url <sitio>    # mide el sitio y arma el borrador
 ```
 
-`generar.sh` genera los dos documentos y después corre `verify.py`. Si algo no cierra,
-devuelve error y no hay entregable.
+Después se redacta `config.json` (hallazgos con el patrón §5, narrativa, precios)
+y se corre `bash scripts/verificar-todo.sh`.
 
-## Qué quedó verificado (y cómo)
+### Dónde vive cada cosa
 
-`verify.py` — sobre el **DOM renderizado**, no sobre el HTML fuente:
-- el informe paginó en 12 hojas con `data-desbordes=0` (ninguna hoja con contenido cortado);
-- los 6 hallazgos y las 6 filas de módulos están en el documento;
-- el selector de la propuesta ejecutó su JavaScript: 6 tarjetas y total inicial USD 350;
-- las dos piezas comparten marca, membrete y pie.
-
-`verificar-sitio.py` — el sitio nuevo, medido con el mismo motor que mide al cliente y a los pares:
-
-| Señal | Sitio actual | Sitio nuevo |
+| Qué | Dónde | Nota |
 |---|---|---|
-| Idioma declarado | `ar` | `es-AR` |
-| Descripción para Google | 0 caracteres | 150 caracteres |
-| Open Graph / Twitter | 0 / 0 | 10 / 4 |
-| URL canónica | — | sí |
-| Datos estructurados | 0 bloques | Psychologist + Person + FAQPage |
-| Encabezados h1 / h2 | 1 / 1 | 1 / 7 |
-| Imágenes sin texto alternativo | 5 de 13 | 0 de 4 |
-| Carga diferida / srcset | 0 / 0 | 3 / 2 |
-| Llamados a WhatsApp | 0 | 14 |
-| Mapa del sitio | 404 | 200 |
-| Peso por visita | 3.555,8 KB en 18 archivos | 724,6 KB en 5 archivos |
+| Precios de los add-ons | `templates/catalogo.json` | **fuente única**. Se materializa con `sincronizar-catalogo.py` |
+| Textos compartidos (índice, glosario, etapas, pago) | `templates/secciones.json` | un cliente los puede pisar desde su config |
+| Datos y narrativa del cliente | `config.json` | hallazgos, KPIs, escenarios, promesas |
+| Identidad visual | `brand/brand.css` | dos roles de color, fuentes, cero radio |
+| Plantillas | `templates/*.html` | estructura, no datos |
 
-Además: render real sin desborde horizontal a 1440, 1024, 768, 390 y 360 px de ancho.
+---
 
-## Lo que hay que confirmar con el cliente antes de publicar
+## Lo que NO hay que hacer
 
-Estos cuatro datos **no figuran en ninguna fuente** y por eso el sitio no los inventa.
-Están también en la propuesta, como «cuatro datos que no puedo inventar»:
+Errores que ya nos costaron una corrida, en orden de frecuencia:
 
-1. **Correo de contacto.** El sitio actual no publica ninguno. El sitio nuevo no lo inventa:
-   el contacto es WhatsApp, teléfono, dirección y la agenda de Doctoralia.
-2. **Días y horarios de atención.** Hoy no figuran en ninguna parte.
-3. **Documentación para reintegro.** El perfil de Doctoralia dice «no se aceptan coberturas
-   médicas: sólo pacientes particulares». El sitio nuevo dice exactamente eso y ofrece
-   consultar por WhatsApp. **Si emite factura para reintegro, hay que corregirlo.**
-4. **Qué plataforma usar para reservar turnos.** El sitio nuevo convive con la agenda actual
-   de Doctoralia; el módulo M3 la reemplaza o la sincroniza con Google Calendar.
+- **Pisar el template para cambiar contenido.** El contenido va en
+  `config.json` o `secciones.json`. Tocar el template rompe a todos los leads.
+- **Confiar en el total.** Un total que cierra no dice nada sobre los precios de
+  línea: tres precios mal pueden **cancelarse entre sí** y dar el total correcto.
+  Por eso existe `verificar-precios.py`.
+- **Poner `break-inside: avoid` en cada sección.** Una sección que no entra se va
+  entera a la hoja siguiente y deja media hoja en blanco. Las bandas fluyen; lo
+  atómico (tarjetas, capturas, KPIs) se marca pieza por pieza.
+- **Numerar secciones con un contador de CSS.** Numera por orden del DOM, y el
+  índice no sigue ese orden (la propuesta muestra el resultado antes que el
+  problema, §3.4). El número sale del índice.
+- **Poner `white-space: nowrap` en el membrete o en una fecha.** Desborda la
+  pantalla angosta. Está medido: 168 px.
+- **Publicar con datos de relleno.** Testimonios, teléfonos o métricas de
+  maqueta en un documento que va a un cliente: no.
+- **Datos que vienen de otra IA.** Un mockup o una spec de un tercero trae
+  números inventados y arquitecturas que reinventan lo que ya existe. Se porta la
+  **idea**; cada número se verifica contra la fuente antes de entrar.
 
-Y una decisión de producto: **no hay ninguna foto del profesional**. Las 4 fotos del
-consultorio son reales y se usan; el retrato no se puede inventar.
+---
 
-## Lo que se descartó, y por qué
+## Verificación
 
-Llegaron dos maquetas HTML de una herramienta externa como «sugerencias de mejora».
-Se usaron como referencia de estructura, **no como fuente de datos**: contenían métricas
-inventadas (seguidores, lecturas, recomendaciones de colegas con nombre y apellido), una
-copia de la interfaz de LinkedIn como sitio del cliente y un error de transcripción en el
-número de trámite del certificado (decían `08-0111-22`; el certificado dice `58-0111-22`).
-El detalle completo está en `00-auditoria/fuentes.md`.
+`verificar-todo.sh` es la puerta. Si querés mirar el detalle:
 
-## Cómo se relaciona con el sistema de propuestas
+```bash
+python scripts/diagnostico-desborde.py 01-propuesta/propuesta.html 512   # qué desborda
+python scripts/movil.py                                                  # capturas mobile
+python scripts/consolidar-evidencia.py                                   # evidencia machine-readable
+python -c "import pypdf; ..."                                            # hojas, texto, links del PDF
+```
 
-Este repositorio es un **lead de un solo cliente**, derivado de `~/propuestas-clientes`.
-Reusa su marca (`brand/`), su paginador calibrado (`templates/print.js`) y su verificación
-en Chrome headless. Los cambios que se hicieron acá y conviene devolver al sistema general:
-
-- `templates/print.js`: secciones dinámicas — la sección **Comparativo verificado** entra
-  sólo si `config.comparativo` tiene filas, y los hallazgos aceptan `prioridad`.
-- `brand/brand.css`: estilos de prioridad, tabla comparativa, indicadores y layout de la
-  propuesta comercial.
-- `scripts/generate.py`: acepta `--config`, `--informe` y `--propuesta`, y arma la propuesta
-  narrativa completa (comparativo, conversión a pesos, banda de antes/después).
-
-## Reproducibilidad y honestidad
-
-- **Nada visual fuera de `brand/`.**
-- **`config.json` es el contrato.** Los documentos son la salida: no se editan a mano.
-- **Los totales se calculan, no se escriben.** El informe, los escenarios, la tabla de
-  inversión y el selector derivan del mismo `config.json`.
-- **Cada afirmación está marcada.** `[MEDIDO]` si sale de una medición, `[INFERIBLE]` si es
-  una estimación, `[NO VERIFICADO]` si no se pudo comprobar. Lo no verificado no se afirma:
-  LinkedIn responde con muro de registro (HTTP 999), así que no hay una sola cifra de esa red
-  en este repositorio.
+Y **mirá las hojas**. Renderizá el PDF a imágenes y revisá con visión: los
+defectos que aparecieron **solo** así fueron una métrica partida en dos líneas,
+una bandera tapando un precio, hojas medio vacías y una referencia de folio
+tomada del tratamiento del nombre (`LLL` por «Lic. Lagos`).
